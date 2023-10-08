@@ -31,7 +31,7 @@ export default class FuncionarioBD {
         const listaFuncionarios = [];
         for (const row of rows) {           
             const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['senha'], row['tipo_usuario']);
-            const funcionario = new Funcionario(usuario,row['funcionario_id'],row['cargo'], row['salario']);
+            const funcionario = new Funcionario(row['funcionario_id'],row['cargo'], row['salario'], usuario);
             listaFuncionarios.push(funcionario);
         }
         return listaFuncionarios;

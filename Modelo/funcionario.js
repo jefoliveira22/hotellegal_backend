@@ -1,18 +1,18 @@
 import FuncionarioBD from "../Persistencia/funcionarioBD.js";
 
 export default class Funcionario {
-    
+
     #funcionario_id
-    #usuario_id
     #cargo
     #salario
+    #Usuario
        
   
-    constructor(funcionario_id, usuario_id, cargo, salario) {
+    constructor(funcionario_id, cargo, salario, Usuario) {
         this.#funcionario_id = funcionario_id;
-        this.#usuario_id = usuario_id;
         this.#cargo = cargo;
         this.#salario = salario;  
+        this.#Usuario = Usuario;
     }
     
     get funcionario_id() {
@@ -21,14 +21,6 @@ export default class Funcionario {
 
     set funcionario_id(novofuncionario_id) {
         this.#funcionario_id = novofuncionario_id;
-    }
-
-    get usuario_id() {
-        return this.#usuario_id;
-    }
-
-    set usuario_id(novousuario_id) {
-        this.#usuario_id = novousuario_id;
     }
 
     get cargo() {
@@ -46,14 +38,21 @@ export default class Funcionario {
     set salario(novosalario) {
         this.#salario = novosalario;
     }
+     
+    get usuario() {
+        return this.#Usuario;
+    }
 
+    set usuario(novousuario) {
+        this.#Usuario = novousuario;
+    }
 
     toJSON() {
         return {
             "funcionario_id" : this.#funcionario_id,
-            "usuario_id" : this.#usuario_id,
             "cargo" :   this.#cargo,  
-            "salario" : this.#salario 
+            "salario" : this.#salario,
+            "usuario" : this.#Usuario,
         }
     }
 
