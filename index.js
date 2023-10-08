@@ -14,6 +14,8 @@ import rotaProduto from './Rotas/rotaProduto.js';
 import rotaItensConsumo from './Rotas/rotaItensConsumo.js';
 import rotaConsumoServ from './Rotas/rotaConsumoServ.js';
 import rotaLogin from './Rotas/rotaLogin.js';
+import rotaUsuario from './Rotas/rotaUsuario.js';
+import rotaFuncionario from './Rotas/rotaFuncionario.js';
 
 
 const app = express();
@@ -35,6 +37,8 @@ app.use('/produto', rotaProduto);
 app.use('/itensconsumo', rotaItensConsumo);
 app.use('/consumoserv', rotaConsumoServ);
 app.use('/login', rotaLogin);
+app.use('/usuario', rotaUsuario);
+app.use('/funcionario', rotaFuncionario);
 
 app.listen(4000, () => {
     console.log('Backend ouvindo em http://localhost:4000');
