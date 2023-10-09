@@ -1,6 +1,6 @@
 import UsuarioBD from "../Persistencia/usuarioBD.js";
 
-export default class Camareiro {
+export default class Usuario {
 
     #usuario_id
     #nome
@@ -8,12 +8,12 @@ export default class Camareiro {
     #senha
     #tipo_usuario
   
-    constructor(usu_id, usu_nome, usu_email, usu_senha, usu_tipo) {
-        this.#usuario_id = usu_id;
-        this.#nome = usu_nome;
-        this.#email = usu_email;
-        this.#senha = usu_senha;
-        this.#tipo_usuario = usu_tipo;
+    constructor(usuario_id, nome, email, senha, tipo_usuario) {
+        this.#usuario_id = usuario_id;
+        this.#nome = nome;
+        this.#email = email;
+        this.#senha = senha;
+        this.#tipo_usuario = tipo_usuario;
     }
     
     get usuario_id() {
@@ -70,7 +70,8 @@ export default class Camareiro {
 
     async gravar() {
         const usuarioBD = new UsuarioBD();
-        await usuarioBD.incluir(this);
+        this.#usuario_id = await usuarioBD.incluir(this);
+        return this.#usuario_id;
     }
 
     async atualizar() {

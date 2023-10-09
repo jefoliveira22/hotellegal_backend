@@ -1,4 +1,5 @@
 import FuncionarioBD from "../Persistencia/funcionarioBD.js";
+import UsuarioBD from "../Persistencia/usuarioBD.js";
 
 export default class Funcionario {
 
@@ -58,7 +59,7 @@ export default class Funcionario {
 
     async gravar() {
         const funcionarioBD = new FuncionarioBD();
-        this.funcionario_id = await funcionarioBD.incluir(this);
+        this.#funcionario_id = await funcionarioBD.incluir(this);
     }
 
     async atualizar() {

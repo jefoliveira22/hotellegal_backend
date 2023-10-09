@@ -7,13 +7,12 @@ export default class FuncionarioBD {
     async incluir(funcionario) {
         if (funcionario instanceof Funcionario) {
             const conexao = await conectar();
-            const sql = "INSERT INTO funcionarios(funcionario_id, usuario_id,cargo,salario) VALUES(?,?,?,?)";            
-            const valores = [funcionario.funcionario_id, funcionario.usuario.usuario_id, funcionario.cargo, funcionario.salario];
+            const sql = "INSERT INTO funcionarios(usuario_id,cargo,salario) VALUES(?,?,?)";            
+            const valores = [funcionario.usuario.usuario_id, funcionario.cargo, funcionario.salario];
             const resultado = await conexao.query(sql, valores);
             return await resultado[0].insertId;
         }
     }
-
 
     async excluir(funcionario) {
         if (funcionario instanceof Funcionario) {

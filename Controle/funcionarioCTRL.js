@@ -1,4 +1,5 @@
 import Funcionario from '../Modelo/funcionario.js';
+import Usuario from '../Modelo/usuario.js';
 
 
 export default class FuncionarioCTRL {
@@ -7,36 +8,39 @@ export default class FuncionarioCTRL {
         if (requisicao.method === "POST" && requisicao.is('application/json')) {
             const dados = requisicao.body;
             const funcionario_id = dados.funcionario_id;
-            const usuario_id = dados.usuario_id;
             const cargo = dados.cargo;
             const salario = dados.salario;
-       
-            if (funcionario_id,usuario_id,cargo,salario) {
-                const funcionario = new Funcionario(funcionario_id,usuario_id,cargo,salario );
-                funcionario.gravar().then(() => {
-                    resposta.status(200).json({
-                        status:true,
-                        codigo:funcionario.funcionario_id,
-                        mensagem:'Funcionário gravado com sucesso!'
+            let usuario = dados.usuario;
+            if (funcionario_id, cargo, salario, usuario) {
+                const usuariopadrao = new Usuario(0, usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario);
+                usuariopadrao.gravar().then(() => {
+                    usuario["usuario_id"] = usuariopadrao.usuario_id
+                    const funcionario = new Funcionario(0, cargo, salario, usuario);
+                    funcionario.gravar().then(() => {
+                        resposta.status(200).json({
+                            status: true,
+                            codigo: funcionario.funcionario_id,
+                            mensagem: 'Funcionário gravado com sucesso!'
+                        });
+                    }).catch((erro) => {
+                        resposta.status(500).json({
+                            status: false,
+                            mensagem: erro.message
+                        })
                     });
-                }).catch((erro) => {
-                    resposta.status(500).json({
-                        status:false,
-                        mensagem: erro.message
-                    })
                 });
             }
             else {
                 resposta.status(400).json({
-                    status:false,
-                    mensagem:'Informe adequadamente todos os dados de um Funcionário conforme documentação da API.'
+                    status: false,
+                    mensagem: 'Informe adequadamente todos os dados de um Funcionário conforme documentação da API.'
                 })
             }
         }
         else {
             resposta.status(400).json({
-                status:false,
-                mensagem:'Método não permitido ou funcionário no formato JSON não fornecido.'
+                status: false,
+                mensagem: 'Método não permitido ou funcionário no formato JSON não fornecido.'
             });
         }
     }
@@ -127,27 +131,27 @@ export default class FuncionarioCTRL {
                 const funcionario = new Funcionario(funcionario_id);
                 funcionario.removerBanco().then(() => {
                     resposta.status(200).json({
-                        status:true,
-                        mensagem:'Funcionário removido com sucesso!'
+                        status: true,
+                        mensagem: 'Funcionário removido com sucesso!'
                     });
                 }).catch((erro) => {
                     resposta.status(500).json({
-                        status:false,
+                        status: false,
                         mensagem: erro.message
                     })
                 });
             }
             else {
                 resposta.status(400).json({
-                    status:false,
-                    mensagem:'Informe id do funcionário conforme documentação da API.'
+                    status: false,
+                    mensagem: 'Informe id do funcionário conforme documentação da API.'
                 })
             }
         }
         else {
             resposta.status(400).json({
-                status:false,
-                mensagem:'Método não permitido ou funcionário no formato JSON não fornecido.'
+                status: false,
+                mensagem: 'Método não permitido ou funcionário no formato JSON não fornecido.'
             });
         }
     }
@@ -160,15 +164,15 @@ export default class FuncionarioCTRL {
                 resposta.status(200).json(funcionarios);
             }).catch((erro) => {
                 resposta.status(500).json({
-                    status:false,
+                    status: false,
                     mensagem: erro.message
                 })
             });
         }
         else {
             resposta.status(400).json({
-                status:false,
-                mensagem:'Método não permitido ou funcionário no formato JSON não fornecido.'
+                status: false,
+                mensagem: 'Método não permitido ou funcionário no formato JSON não fornecido.'
             });
         }
     }

@@ -5,10 +5,10 @@ export default class UsuarioBD {
     async incluir(usuario) {
         if (usuario instanceof Usuario) {
             const conexao = await conectar();
-            const sql = "INSERT INTO usuarios(usuario_id,nome,email,senha,tipo_usuario) VALUES(?,?,?,?,?)";
-            const valores = [usuario.usuario_id, usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario];
+            const sql = "INSERT INTO usuarios(nome,email,senha,tipo_usuario) VALUES(?,?,?,?)";
+            const valores = [usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario];
             const resultado = await conexao.query(sql, valores);
-            return await resultado[0].insertID;
+            return await resultado[0].insertId;
         }
     }
 
@@ -16,7 +16,7 @@ export default class UsuarioBD {
         if (usuario instanceof Usuario) {
             const conexao = await conectar();
             const sql = "UPDATE usuarios SET nome=?, email=?, senha=?, where usuario_id=?";
-            const valores = [usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario,usuario.usuario_id];
+            const valores = [usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario, usuario.usuario_id];
             await conexao.query(sql, valores);
         }
     }
@@ -54,5 +54,5 @@ export default class UsuarioBD {
         }
         return listausuario;
     }
-    
+
 }
