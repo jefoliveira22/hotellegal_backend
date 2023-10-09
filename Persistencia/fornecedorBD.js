@@ -7,8 +7,8 @@ export default class FornecedorBD {
     async incluir(fornecedor) {
         if (fornecedor instanceof Fornecedor) {
             const conexao = await conectar();
-            const sql = "INSERT INTO fornecedores(fornecedor_id,usuario_id,nome_empresa,cnpj) VALUES(?,?,?,?)";            
-            const valores = [fornecedor.usuario.usuario_id, fornecedor.nome, fornecedor.empresa, fornecedor.cnpj];
+            const sql = "INSERT INTO fornecedores(usuario_id,nome_empresa,cnpj) VALUES(?,?,?)";            
+            const valores = [fornecedor.usuario.usuario_id, fornecedor.nome_empresa, fornecedor.cnpj];
             const resultado = await conexao.query(sql, valores);
             return await resultado[0].insertId;
         }
