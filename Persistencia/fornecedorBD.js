@@ -14,6 +14,15 @@ export default class FornecedorBD {
         }
     }
 
+    async alterar(fornecedor) {
+        if (fornecedor instanceof Fornecedor) {
+            const conexao = await conectar();
+            const sql = "UPDATE fornecedores SET fornecedor_id=?,nome_empresa=?,cnpj=? where usuario_id=?";
+            const valores = [fornecedor.fornecedor_id, fornecedor.nome_empresa, fornecedor.cnpj, fornecedor.usuario.usuario_id];
+            await conexao.query(sql, valores);
+        }
+    }
+
     async excluir(fornecedor) {
         if (fornecedor instanceof Fornecedor) {
             const conexao = await conectar();

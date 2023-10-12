@@ -45,47 +45,45 @@ export default class FuncionarioCTRL {
         }
     }
 
-    // atualizar(requisicao, resposta) {
-    //     resposta.type('application/json');
-    //     if (requisicao.method === "PUT" && requisicao.is('application/json')) {
-    //         const dados = requisicao.body;
-    //         const id_reserva = dados.id_reserva;
-    //         const cpf_hosp = dados.cpf_hosp;
-    //         const checkin = dados.checkin;
-    //         const checkout = dados.checkout;
-    //         const qte_pessoa_mais = dados.qte_pessoa_mais;
-    //         const qte_pessoa_menos = dados.qte_pessoa_menos;
-    //         const acomodacao = dados.acomodacao;
-    //         const canc_free = dados.canc_free;
-    //         const ativo = dados.ativo;
-    //         if (id_reserva, cpf_hosp, checkin, checkout, qte_pessoa_mais, qte_pessoa_menos, acomodacao, canc_free, ativo) {
-    //             const reserva = new Reserva(id_reserva, cpf_hosp, checkin, checkout, qte_pessoa_mais, qte_pessoa_menos, acomodacao, canc_free, ativo);
-    //             reserva.atualizar().then(() => {
-    //                 resposta.status(200).json({
-    //                     status:true,
-    //                     mensagem:'Reserva atualizada com sucesso!'
-    //                 });
-    //             }).catch((erro) => {
-    //                 resposta.status(500).json({
-    //                     status:false,
-    //                     mensagem: erro.message
-    //                 })
-    //             });
-    //         }
-    //         else {
-    //             resposta.status(400).json({
-    //                 status:false,
-    //                 mensagem:'Informe adequadamente todos os dados de uma reserva conforme documentação da API.'
-    //             })
-    //         }
-    //     }
-    //     else {
-    //         resposta.status(400).json({
-    //             status:false,
-    //             mensagem:'Método não permitido ou reserva no formato JSON não fornecido.'
-    //         });
-    //     }
-    // }
+    atualizar(requisicao, resposta) {
+        resposta.type('application/json');
+        if (requisicao.method === "PUT" && requisicao.is('application/json')) {
+            const dados = requisicao.body;
+            const cliente_id = dados.cliente_id;
+            const endereco = dados.endereco;
+            const telefone = dados.telefone;
+            let usuario = dados.usuario;
+            if (cliente_id, endereco, telefone, usuario) {
+                const usuariopadrao = new Usuario(usuario.usuario_id, usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario);
+                usuariopadrao.atualizar().then(() => {
+                    const cliente = new Cliente(cliente_id, endereco, telefone, usuario);
+                    cliente.atualizar().then(() => {
+                        resposta.status(200).json({
+                            status: true,
+                            mensagem: 'Cliente atualizado com sucesso!'
+                        });
+                    }).catch((erro) => {
+                        resposta.status(500).json({
+                            status: false,
+                            mensagem: erro.message
+                        })
+                    });
+                });
+            }
+            else {
+                resposta.status(400).json({
+                    status: false,
+                    mensagem: 'Informe adequadamente todos os dados de um cliente conforme documentação da API.'
+                })
+            }
+        }
+        else {
+            resposta.status(400).json({
+                status: false,
+                mensagem: 'Método não permitido ou cliente no formato JSON não fornecido.'
+            });
+        }
+    }
 
     excluir(requisicao, resposta) {
         resposta.type('application/json');

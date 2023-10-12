@@ -14,6 +14,15 @@ export default class ClienteBD {
         }
     }
 
+    async alterar(cliente) {
+        if (cliente instanceof Cliente) {
+            const conexao = await conectar();
+            const sql = "UPDATE clientes SET cliente_id=?,endereco=?,telefone=? where usuario_id=?";
+            const valores = [cliente.cliente_id, cliente.endereco, cliente.telefone, cliente.usuario.usuario_id];
+            await conexao.query(sql, valores);
+        }
+    }
+
     async excluir(cliente) {
         if (cliente instanceof Cliente) {
             const conexao = await conectar();
