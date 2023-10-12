@@ -6,7 +6,6 @@ const clienteCtrl = new ClienteCTRL();
 rotaCliente
 .post('/', clienteCtrl.gravar)
 .put('/', clienteCtrl.atualizar)
-.delete('/', clienteCtrl.excluir)
 .get('/', clienteCtrl.consultar)
 .get('/:nome', clienteCtrl.consultarPeloNome);
 

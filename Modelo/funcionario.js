@@ -67,11 +67,6 @@ export default class Funcionario {
         await funcionarioBD.alterar(this);
     }
 
-    async removerBanco() {
-        const funcionarioBD = new FuncionarioBD();
-        await funcionarioBD.excluir(this);
-    }
-
     async consultar() {
         const funcionarioBD = new FuncionarioBD();
         const funcionarios = await funcionarioBD.consultar();

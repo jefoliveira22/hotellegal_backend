@@ -78,39 +78,39 @@ export default class UsuarioCTRL {
         }
     }
 
-    // excluir(requisicao, resposta) {
-    //     resposta.type('application/json');
-    //     if (requisicao.method === "DELETE" && requisicao.is('application/json')) {
-    //         const dados = requisicao.body;
-    //         const cpf_cam = dados.cpf_cam;
-    //         if (cpf_cam) {
-    //             const camareiro = new Camareiro(cpf_cam);
-    //             camareiro.removerBanco(camareiro).then(() => {
-    //                 resposta.status(200).json({
-    //                     status:true,
-    //                     mensagem:'Camareiro excluído com sucesso!'
-    //                 });
-    //             }).catch((erro) => {
-    //                 resposta.status(500).json({
-    //                     status:false,
-    //                     mensagem: erro.message
-    //                 })
-    //             });
-    //         }
-    //         else {
-    //             resposta.status(400).json({
-    //                 status:false,
-    //                 mensagem:'Informe o cpf do camareiro conforme documentação da API.'
-    //             })
-    //         }
-    //     }
-    //     else {
-    //         resposta.status(400).json({
-    //             status:false,
-    //             mensagem:'Método não permitido ou camareiro no formato JSON não fornecido.'
-    //         });
-    //     }
-    // }
+    excluir(requisicao, resposta) {
+        resposta.type('application/json');
+        if (requisicao.method === "DELETE" && requisicao.is('application/json')) {
+            const dados = requisicao.body;
+            const usuario_id = dados.usuario_id;
+            if (usuario_id) {
+                const usuario = new Usuario(usuario_id);
+                usuario.removerBanco(usuario_id).then(() => {
+                    resposta.status(200).json({
+                        status: true,
+                        mensagem: 'Usuario excluído com sucesso!'
+                    });
+                }).catch((erro) => {
+                    resposta.status(500).json({
+                        status: false,
+                        mensagem: erro.message
+                    })
+                });
+            }
+            else {
+                resposta.status(400).json({
+                    status: false,
+                    mensagem: 'Informe o nome do usuario conforme documentação da API.'
+                })
+            }
+        }
+        else {
+            resposta.status(400).json({
+                status: false,
+                mensagem: 'Método não permitido ou usuario no formato JSON não fornecido.'
+            });
+        }
+    }
 
     consultar(requisicao, resposta) {
         resposta.type('application/json');

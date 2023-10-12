@@ -66,11 +66,6 @@ export default class Fornecedor {
         await fornecedorBD.alterar(this);
     }
 
-    async removerBanco() {
-        const fornecedorBD = new FornecedorBD();
-        await fornecedorBD.excluir(this);
-    }
-
     async consultar() {
         const fornecedorBD = new FornecedorBD();
         const fornecedores = await fornecedorBD.consultar();

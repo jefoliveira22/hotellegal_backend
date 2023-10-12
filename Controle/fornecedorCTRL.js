@@ -85,40 +85,6 @@ export default class FornecedorCTRL {
         }
     }
 
-    excluir(requisicao, resposta) {
-        resposta.type('application/json');
-        if (requisicao.method === "DELETE" && requisicao.is('application/json')) {
-            const dados = requisicao.body;
-            const fornecedor_id = dados.fornecedor_id;
-            if (fornecedor_id) {
-                const fornecedor = new Fornecedor(fornecedor_id);
-                fornecedor.removerBanco().then(() => {
-                    resposta.status(200).json({
-                        status: true,
-                        mensagem: 'Fornecedor removido com sucesso!'
-                    });
-                }).catch((erro) => {
-                    resposta.status(500).json({
-                        status: false,
-                        mensagem: erro.message
-                    })
-                });
-            }
-            else {
-                resposta.status(400).json({
-                    status: false,
-                    mensagem: 'Informe id do Fornecedor conforme documentação da API.'
-                })
-            }
-        }
-        else {
-            resposta.status(400).json({
-                status: false,
-                mensagem: 'Método não permitido ou fornecedor no formato JSON não fornecido.'
-            });
-        }
-    }
-
     consultar(requisicao, resposta) {
         resposta.type('application/json');
         if (requisicao.method === "GET") {

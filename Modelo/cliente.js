@@ -66,16 +66,6 @@ export default class Cliente {
         await clienteBD.alterar(this);
     }
 
-    async baixar() {
-        const clienteBD = new ClienteBD();
-        await clienteBD.baixaCliente(this);
-    }
-
-    async removerBanco() {
-        const clienteBD = new ClienteBD();
-        await clienteBD.excluir(this);
-    }
-
     async consultar() {
         const clienteBD = new ClienteBD();
         const clientes = await clienteBD.consultar();

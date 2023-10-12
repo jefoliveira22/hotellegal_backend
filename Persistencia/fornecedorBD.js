@@ -23,15 +23,6 @@ export default class FornecedorBD {
         }
     }
 
-    async excluir(fornecedor) {
-        if (fornecedor instanceof Fornecedor) {
-            const conexao = await conectar();
-            const sql = "DELETE FROM fornecedores WHERE fornecedor_id=?";
-            const valores = [fornecedor.fornecedor_id];
-            await conexao.query(sql, valores);
-        }
-    }
-
     async consultar() {
         const conexao = await conectar();
         const sql = "SELECT * FROM fornecedores INNER JOIN usuarios ON fornecedores.usuario_id = usuarios.usuario_id";

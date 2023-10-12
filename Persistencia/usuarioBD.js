@@ -25,7 +25,7 @@ export default class UsuarioBD {
         if (usuario instanceof Usuario) {
             const conexao = await conectar();
             const sql = "DELETE FROM usuarios WHERE usuario_id=?";
-            const valores = [usuario];
+            const valores = [usuario.usuario_id];
             await conexao.query(sql, valores);
         }
     }

@@ -23,15 +23,6 @@ export default class FuncionarioBD {
         }
     }
 
-    async excluir(funcionario) {
-        if (funcionario instanceof Funcionario) {
-            const conexao = await conectar();
-            const sql = "DELETE FROM funcionarios WHERE funcionario_id=?";
-            const valores = [funcionario.funcionario_id];
-            await conexao.query(sql, valores);
-        }
-    }
-
     async consultar() {
         const conexao = await conectar();
         const sql = "SELECT * FROM funcionarios INNER JOIN usuarios ON funcionarios.usuario_id = usuarios.usuario_id";

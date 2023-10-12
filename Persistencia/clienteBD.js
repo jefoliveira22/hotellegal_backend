@@ -23,15 +23,6 @@ export default class ClienteBD {
         }
     }
 
-    async excluir(cliente) {
-        if (cliente instanceof Cliente) {
-            const conexao = await conectar();
-            const sql = "DELETE FROM clientes WHERE cliente_id=?";
-            const valores = [cliente.cliente_id];
-            await conexao.query(sql, valores);
-        }
-    }
-
     async consultar() {
         const conexao = await conectar();
         const sql = "SELECT * FROM clientes INNER JOIN usuarios ON clientes.usuario_id = usuarios.usuario_id";

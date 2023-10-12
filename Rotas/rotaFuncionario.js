@@ -5,7 +5,6 @@ const rotaFuncionario = new Router();
 const funcionarioCtrl = new FuncionarioCTRL();
 rotaFuncionario
 .post('/', funcionarioCtrl.gravar)
-.delete('/', funcionarioCtrl.excluir)
 .get('/', funcionarioCtrl.consultar)
 .put('/', funcionarioCtrl.atualizar)
 .get('/:nome', funcionarioCtrl.consultarPeloNome);

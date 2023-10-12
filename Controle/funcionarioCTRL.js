@@ -85,40 +85,6 @@ export default class FuncionarioCTRL {
         }
     }
 
-    excluir(requisicao, resposta) {
-        resposta.type('application/json');
-        if (requisicao.method === "DELETE" && requisicao.is('application/json')) {
-            const dados = requisicao.body;
-            const funcionario_id = dados.funcionario_id;
-            if (funcionario_id) {
-                const funcionario = new Funcionario(funcionario_id);
-                funcionario.removerBanco().then(() => {
-                    resposta.status(200).json({
-                        status: true,
-                        mensagem: 'Funcionário removido com sucesso!'
-                    });
-                }).catch((erro) => {
-                    resposta.status(500).json({
-                        status: false,
-                        mensagem: erro.message
-                    })
-                });
-            }
-            else {
-                resposta.status(400).json({
-                    status: false,
-                    mensagem: 'Informe id do funcionário conforme documentação da API.'
-                })
-            }
-        }
-        else {
-            resposta.status(400).json({
-                status: false,
-                mensagem: 'Método não permitido ou funcionário no formato JSON não fornecido.'
-            });
-        }
-    }
-
     consultar(requisicao, resposta) {
         resposta.type('application/json');
         if (requisicao.method === "GET") {
