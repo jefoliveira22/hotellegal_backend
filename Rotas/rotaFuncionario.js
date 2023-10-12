@@ -7,7 +7,7 @@ rotaFuncionario
 .post('/', funcionarioCtrl.gravar)
 .delete('/', funcionarioCtrl.excluir)
 .get('/', funcionarioCtrl.consultar)
-// .put('/', reservaCtrl.atualizar)
+.put('/', funcionarioCtrl.atualizar)
 // .put('/baixar', reservaCtrl.baixarumaReserva)
 // .get('/ultimo/', reservaCtrl.consultarPeloUltimoID)
 // .get('/:id_reserva', reservaCtrl.consultarPeloID);

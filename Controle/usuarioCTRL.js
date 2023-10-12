@@ -12,75 +12,71 @@ export default class UsuarioCTRL {
             const senha = dados.senha;
             const tipo_usuario = dados.tipo_usuario
             if (usuario_id, nome, email, senha, tipo_usuario) {
-                const usuario = new Usuario(usuario_id,nome, email, senha, tipo_usuario);
+                const usuario = new Usuario(usuario_id, nome, email, senha, tipo_usuario);
                 usuario.gravar().then(() => {
                     resposta.status(200).json({
-                        status:true,
-                        mensagem:'Usuário gravado com sucesso!'
+                        status: true,
+                        mensagem: 'Usuário gravado com sucesso!'
                     });
                 }).catch((erro) => {
                     resposta.status(500).json({
-                        status:false,
+                        status: false,
                         mensagem: erro.message
                     })
                 });
             }
             else {
                 resposta.status(400).json({
-                    status:false,
-                    mensagem:'Informe adequadamente todos os dados do usuário conforme documentação da API.'
+                    status: false,
+                    mensagem: 'Informe adequadamente todos os dados do usuário conforme documentação da API.'
                 })
             }
         }
         else {
             resposta.status(400).json({
-                status:false,
-                mensagem:'Método não permitido ou Usuário no formato JSON não fornecido.'
+                status: false,
+                mensagem: 'Método não permitido ou Usuário no formato JSON não fornecido.'
             });
         }
     }
 
-    // atualizar(requisicao, resposta) {
-    //     resposta.type('application/json');
-    //     if (requisicao.method === "PUT" && requisicao.is('application/json')) {
-    //         const dados = requisicao.body;
-    //         const cpf_cam = dados.cpf_cam;
-    //         const nome_cam = dados.nome_cam;
-    //         const data_nasc = dados.data_nasc;
-    //         const endereco_cam = dados.endereco_cam;
-    //         const bairro = dados.bairro;
-    //         const cidade_cam = dados.cidade_cam;
-    //         const uf_cam = dados.uf_cam;
-    //         const nis = dados.nis;
-    //         const genero = dados.genero;
-    //         if (cpf_cam, nome_cam, data_nasc, endereco_cam, bairro, cidade_cam, uf_cam, nis, genero) {
-    //             const camareiro = new Camareiro(cpf_cam, nome_cam, data_nasc, endereco_cam, bairro, cidade_cam, uf_cam, nis, genero);
-    //             camareiro.atualizar().then(() => {
-    //                 resposta.status(200).json({
-    //                     status:true,
-    //                     mensagem:'Camareiro atualizado com sucesso!'
-    //                 });
-    //             }).catch((erro) => {
-    //                 resposta.status(500).json({
-    //                     status:false,
-    //                     mensagem: erro.message
-    //                 })
-    //             });
-    //         }
-    //         else {
-    //             resposta.status(400).json({
-    //                 status:false,
-    //                 mensagem:'Informe adequadamente todos os dados de um camareiro conforme documentação da API.'
-    //             })
-    //         }
-    //     }
-    //     else {
-    //         resposta.status(400).json({
-    //             status:false,
-    //             mensagem:'Método não permitido ou camareiro no formato JSON não fornecido.'
-    //         });
-    //     }
-    // }
+    atualizar(requisicao, resposta) {
+        resposta.type('application/json');
+        if (requisicao.method === "POST" && requisicao.is('application/json')) {
+            const dados = requisicao.body;
+            const usuario_id = dados.usuario_id;
+            const nome = dados.nome;
+            const email = dados.email;
+            const senha = dados.senha;
+            const tipo_usuario = dados.tipo_usuario
+            if (usuario_id, nome, email, senha, tipo_usuario) {
+                const usuario = new Usuario(usuario_id, nome, email, senha, tipo_usuario);
+                usuario.gravar().then(() => {
+                    resposta.status(200).json({
+                        status: true,
+                        mensagem: 'Usuário gravado com sucesso!'
+                    });
+                }).catch((erro) => {
+                    resposta.status(500).json({
+                        status: false,
+                        mensagem: erro.message
+                    })
+                });
+            }
+            else {
+                resposta.status(400).json({
+                    status: false,
+                    mensagem: 'Informe adequadamente todos os dados do usuário conforme documentação da API.'
+                })
+            }
+        }
+        else {
+            resposta.status(400).json({
+                status: false,
+                mensagem: 'Método não permitido ou Usuário no formato JSON não fornecido.'
+            });
+        }
+    }
 
     // excluir(requisicao, resposta) {
     //     resposta.type('application/json');
@@ -124,15 +120,15 @@ export default class UsuarioCTRL {
                 resposta.status(200).json(usuarios);
             }).catch((erro) => {
                 resposta.status(500).json({
-                    status:false,
+                    status: false,
                     mensagem: erro.message
                 })
             });
         }
         else {
             resposta.status(400).json({
-                status:false,
-                mensagem:'Método não permitido ou Usuário não encontrado no forma JSON.'
+                status: false,
+                mensagem: 'Método não permitido ou Usuário não encontrado no forma JSON.'
             });
         }
     }

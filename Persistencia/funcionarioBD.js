@@ -14,6 +14,15 @@ export default class FuncionarioBD {
         }
     }
 
+    async alterar(funcionario) {
+        if (funcionario instanceof Funcionario) {
+            const conexao = await conectar();
+            const sql = "UPDATE funcionarios SET funcionario_id=?,cargo=?,salario=? where usuario_id=?";
+            const valores = [funcionario.funcionario_id, funcionario.cargo, funcionario.salario, funcionario.usuario.usuario_id];
+            await conexao.query(sql, valores);
+        }
+    }
+
     async excluir(funcionario) {
         if (funcionario instanceof Funcionario) {
             const conexao = await conectar();

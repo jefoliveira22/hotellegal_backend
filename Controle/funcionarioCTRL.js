@@ -45,6 +45,46 @@ export default class FuncionarioCTRL {
         }
     }
 
+    atualizar(requisicao, resposta) {
+        resposta.type('application/json');
+        if (requisicao.method === "PUT" && requisicao.is('application/json')) {
+            const dados = requisicao.body;
+            const funcionario_id = dados.funcionario_id;
+            const cargo = dados.cargo;
+            const salario = dados.salario;
+            let usuario = dados.usuario;
+            if (funcionario_id, cargo, salario, usuario) {
+                const usuariopadrao = new Usuario(usuario.usuario_id, usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario);
+                usuariopadrao.atualizar().then(() => {
+                    const funcionario = new Funcionario(funcionario_id, cargo, salario, usuario);
+                    funcionario.atualizar().then(() => {
+                        resposta.status(200).json({
+                            status: true,
+                            mensagem: 'Funcionário atualizado com sucesso!'
+                        });
+                    }).catch((erro) => {
+                        resposta.status(500).json({
+                            status: false,
+                            mensagem: erro.message
+                        })
+                    });
+                });
+            }
+            else {
+                resposta.status(400).json({
+                    status: false,
+                    mensagem: 'Informe adequadamente todos os dados de um Funcionário conforme documentação da API.'
+                })
+            }
+        }
+        else {
+            resposta.status(400).json({
+                status: false,
+                mensagem: 'Método não permitido ou funcionário no formato JSON não fornecido.'
+            });
+        }
+    }
+
     // atualizar(requisicao, resposta) {
     //     resposta.type('application/json');
     //     if (requisicao.method === "PUT" && requisicao.is('application/json')) {

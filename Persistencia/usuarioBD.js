@@ -15,7 +15,7 @@ export default class UsuarioBD {
     async alterar(usuario) {
         if (usuario instanceof Usuario) {
             const conexao = await conectar();
-            const sql = "UPDATE usuarios SET nome=?, email=?, senha=?, where usuario_id=?";
+            const sql = "UPDATE usuarios SET nome=?, email=?, senha=?, tipo_usuario=? where usuario_id=?";
             const valores = [usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario, usuario.usuario_id];
             await conexao.query(sql, valores);
         }
