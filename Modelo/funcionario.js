@@ -67,11 +67,6 @@ export default class Funcionario {
         await funcionarioBD.alterar(this);
     }
 
-    async baixar() {
-        const funcionarioBD = new FuncionarioBD();
-        await funcionarioBD.baixaFuncionario(this);
-    }
-
     async removerBanco() {
         const funcionarioBD = new FuncionarioBD();
         await funcionarioBD.excluir(this);
@@ -83,15 +78,9 @@ export default class Funcionario {
         return funcionarios;
     }
 
-    // async consultarUltimoID() {
-    //     const reservaBD = new ReservaBD();
-    //     const reservas = await reservaBD.consultarUltimoID();
-    //     return reservas;
-    // }
-
-    // async consultarID(id) {
-    //     const reservaBD = new ReservaBD();
-    //     const reservas = await reservaBD.consultarID(id);
-    //     return reservas;
-    // }
+    async consultarNome(nome) {
+        const funcionarioBD = new FuncionarioBD();
+        const funcionarios = await funcionarioBD.consultarNome(nome);
+        return funcionarios;
+    }
 }

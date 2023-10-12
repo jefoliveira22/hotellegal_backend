@@ -7,15 +7,15 @@ export default class Cliente {
     #endereco
     #telefone
     #Usuario
-       
-  
+
+
     constructor(cliente_id, endereco, telefone, Usuario) {
         this.#cliente_id = cliente_id;
         this.#endereco = endereco;
-        this.#telefone = telefone;  
+        this.#telefone = telefone;
         this.#Usuario = Usuario;
     }
-    
+
     get cliente_id() {
         return this.#cliente_id;
     }
@@ -38,7 +38,7 @@ export default class Cliente {
     set telefone(novotelefone) {
         this.#telefone = novotelefone;
     }
-     
+
     get usuario() {
         return this.#Usuario;
     }
@@ -49,10 +49,10 @@ export default class Cliente {
 
     toJSON() {
         return {
-            "cliente_id" : this.#cliente_id,
-            "endereco" :   this.#endereco,  
-            "telefone" : this.#telefone,
-            "usuario" : this.#Usuario,
+            "cliente_id": this.#cliente_id,
+            "endereco": this.#endereco,
+            "telefone": this.#telefone,
+            "usuario": this.#Usuario,
         }
     }
 
@@ -82,15 +82,9 @@ export default class Cliente {
         return clientes;
     }
 
-    // async consultarUltimoID() {
-    //     const reservaBD = new ReservaBD();
-    //     const reservas = await reservaBD.consultarUltimoID();
-    //     return reservas;
-    // }
-
-    // async consultarID(id) {
-    //     const reservaBD = new ReservaBD();
-    //     const reservas = await reservaBD.consultarID(id);
-    //     return reservas;
-    // }
+    async consultarNome(nome) {
+        const clienteBD = new ClienteBD();
+        const clientes = await clienteBD.consultarNome(nome);
+        return clientes;
+    }
 }

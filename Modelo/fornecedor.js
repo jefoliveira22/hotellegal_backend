@@ -3,19 +3,19 @@ import UsuarioBD from "../Persistencia/usuarioBD.js";
 
 export default class Fornecedor {
 
-    #fornecedor_id    
+    #fornecedor_id
     #nome_empresa
     #cnpj
     #Usuario
-       
-  
+
+
     constructor(fornecedor_id, nome_empresa, cnpj, Usuario) {
         this.#fornecedor_id = fornecedor_id;
         this.#nome_empresa = nome_empresa;
-        this.#cnpj = cnpj;  
+        this.#cnpj = cnpj;
         this.#Usuario = Usuario;
     }
-    
+
     get fornecedor_id() {
         return this.#fornecedor_id;
     }
@@ -38,7 +38,7 @@ export default class Fornecedor {
     set cnpj(novocnpj) {
         this.#cnpj = novocnpj;
     }
-     
+
     get usuario() {
         return this.#Usuario;
     }
@@ -49,10 +49,10 @@ export default class Fornecedor {
 
     toJSON() {
         return {
-            "fornecedor_id" : this.#fornecedor_id,
-            "nome_empresa" :   this.#nome_empresa,  
-            "cnpj" : this.#cnpj,
-            "usuario" : this.#Usuario,
+            "fornecedor_id": this.#fornecedor_id,
+            "nome_empresa": this.#nome_empresa,
+            "cnpj": this.#cnpj,
+            "usuario": this.#Usuario,
         }
     }
 
@@ -66,11 +66,6 @@ export default class Fornecedor {
         await fornecedorBD.alterar(this);
     }
 
-    async baixar() {
-        const fornecedorBD = new FornecedorBD();
-        await fornecedorBD.baixaFornecedor(this);
-    }
-
     async removerBanco() {
         const fornecedorBD = new FornecedorBD();
         await fornecedorBD.excluir(this);
@@ -82,15 +77,9 @@ export default class Fornecedor {
         return fornecedores;
     }
 
-    // async consultarUltimoID() {
-    //     const reservaBD = new ReservaBD();
-    //     const reservas = await reservaBD.consultarUltimoID();
-    //     return reservas;
-    // }
-
-    // async consultarID(id) {
-    //     const reservaBD = new ReservaBD();
-    //     const reservas = await reservaBD.consultarID(id);
-    //     return reservas;
-    // }
+    async consultarNome(nome) {
+        const fornecedorBD = new FornecedorBD();
+        const fornecedores = await fornecedorBD.consultarID(nome);
+        return fornecedores;
+    }
 }

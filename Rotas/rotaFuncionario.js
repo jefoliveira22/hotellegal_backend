@@ -8,8 +8,6 @@ rotaFuncionario
 .delete('/', funcionarioCtrl.excluir)
 .get('/', funcionarioCtrl.consultar)
 .put('/', funcionarioCtrl.atualizar)
-// .put('/baixar', reservaCtrl.baixarumaReserva)
-// .get('/ultimo/', reservaCtrl.consultarPeloUltimoID)
-// .get('/:id_reserva', reservaCtrl.consultarPeloID);
+.get('/:nome', funcionarioCtrl.consultarPeloNome);
 
 export default rotaFuncionario;
