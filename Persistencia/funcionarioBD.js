@@ -49,4 +49,18 @@ export default class FuncionarioBD {
         }
         return listaFuncionarios;
     }
+
+    async consultarEmail(email) {
+        const conexao = await conectar();
+        const sql = "SELECT * FROM funcionarios INNER JOIN usuarios ON funcionarios.usuario_id = usuarios.usuario_id WHERE usuarios.email = ?";
+        const valores = [email];
+        const [rows] = await conexao.query(sql, valores);
+        const listaFuncionarios = [];
+        for (const row of rows) {           
+            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['endereco'], row['telefone'], row['cidade'], row['estado'], row['cep'], row['tipo_usuario']);
+            const funcionario = new Funcionario(row['funcionario_id'], row['sexo'], row['datanasc'], row['cargo'], row['salario'], row['nis'], row['senha'], usuario);
+            listaFuncionarios.push(funcionario);
+        }
+        return listaFuncionarios;
+    }
 }

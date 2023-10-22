@@ -122,4 +122,10 @@ export default class Funcionario {
         const funcionarios = await funcionarioBD.consultarNome(nome);
         return funcionarios;
     }
+
+    async consultarEmail(email) {
+        const funcionarioBD = new FuncionarioBD();
+        const funcionarios = await funcionarioBD.consultarEmail(email);
+        return funcionarios;
+    }
 }
