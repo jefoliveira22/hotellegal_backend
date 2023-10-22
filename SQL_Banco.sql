@@ -200,3 +200,18 @@ CREATE TABLE atividade_camareiro (
 
 INSERT INTO usuarios(nome,email,endereco,telefone,cidade,estado,cep,tipo_usuario) VALUES("Administrador","adm@hotellegal.com","None","00","None","None","None","gerente");
 INSERT INTO funcionarios (usuario_id,sexo,datanasc,cargo,salario,nis,senha) VALUES("1","Masculino","1970-01-01","Gerente","000.00","0000","123");
+
+INSERT INTO quarto (numquarto,nomequarto,descricao,ocupado) VALUES("100","Quarto 1","Quarto com duas camas","N");
+INSERT INTO quarto (numquarto,nomequarto,descricao,ocupado) VALUES("200","Quarto 2","Quarto com duas camas","N");
+INSERT INTO quarto (numquarto,nomequarto,descricao,ocupado) VALUES("300","Quarto 3","Quarto com uma cama","N");
+
+INSERT INTO produtos (nome_prod,descricao,preco) VALUES("Salgadinho Doritos","Pacote de salgadinho doritos 90g","6.00");
+INSERT INTO produtos (nome_prod,descricao,preco) VALUES("Coca Cola 350ml","Lata refrigerante Coca Cola 350ml","5.00");
+INSERT INTO produtos (nome_prod,descricao,preco) VALUES("Salgadinho Torcida","Pacote de salgadinho torcida 100g","2.00");
+INSERT INTO produtos (nome_prod,descricao,preco) VALUES("Água Mineral","Garrafa de água mineral 500ml","2.50");
+
+INSERT INTO servicos (nome_serv,descricao_serv,valor) VALUES("Limpeza do quarto","Limpeza do quarto completa","30.00");
+INSERT INTO servicos (nome_serv,descricao_serv,valor) VALUES("Limpeza do banheiro","Limpeza do banheiro completa","35.00");
+INSERT INTO servicos (nome_serv,descricao_serv,valor) VALUES("Troca Roupa de Cama","Troca da roupa de cama","10.00");
+INSERT INTO servicos (nome_serv,descricao_serv,valor) VALUES("Serviço de correspondência","Recebimento de armazenamento de correspondências","20.00");
+
