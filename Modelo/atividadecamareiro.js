@@ -3,15 +3,15 @@ import AtividadecamareiroBD from "../Persistencia/atividadecamareiroBD.js";
 export default class Atividadecamareiro {
 
     #id_atv
-    #cpf_cam
+    #nis_cam
     #descricao
     #prioridade
     #tempoMedioDuracaoMin
     
   
-    constructor(id_atv, cpf_cam, descricao, prioridade, tempoMedioDuracaoMin) {
+    constructor(id_atv, nis_cam, descricao, prioridade, tempoMedioDuracaoMin) {
         this.#id_atv = id_atv;
-        this.#cpf_cam = cpf_cam;
+        this.#nis_cam = nis_cam;
         this.#descricao = descricao;
         this.#prioridade = prioridade;
         this.#tempoMedioDuracaoMin = tempoMedioDuracaoMin;
@@ -25,12 +25,12 @@ export default class Atividadecamareiro {
         this.#id_atv = novoid_atv;
     }
 
-    get cpf_cam() {
-        return this.#cpf_cam;
+    get nis_cam() {
+        return this.#nis_cam;
     }
 
-    set cpf_cam(novo_cpf_cam) {
-        this.#id_atv = novo_cpf_cam;
+    set nis_cam(novo_nis_cam) {
+        this.#id_atv = novo_nis_cam;
     }
 
     get descricao() {
@@ -60,7 +60,7 @@ export default class Atividadecamareiro {
     toJSON() {
         return {
             "id_atv" : this.#id_atv,
-            "cpf_cam" : this.#cpf_cam,
+            "nis_cam" : this.#nis_cam,
             "descricao" : this.#descricao,
             "prioridade" : this.#prioridade,
             "tempoMedioDuracaoMin" : this.#tempoMedioDuracaoMin,
@@ -88,9 +88,9 @@ export default class Atividadecamareiro {
         return atividadecamareiros;
     }
 
-    async consultarCPF(cpf_cam) {
+    async consultarCPF(nis_cam) {
         const atividadecamareiroBD = new AtividadecamareiroBD();
-        const atividadecamareiros = await atividadecamareiroBD.consultarCPF(cpf_cam);
+        const atividadecamareiros = await atividadecamareiroBD.consultarCPF(nis_cam);
         return atividadecamareiros;
     }
 }
