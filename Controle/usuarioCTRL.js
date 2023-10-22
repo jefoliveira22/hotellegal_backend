@@ -9,10 +9,14 @@ export default class UsuarioCTRL {
             const usuario_id = dados.usuario_id;
             const nome = dados.nome;
             const email = dados.email;
-            const senha = dados.senha;
+            const endereco = dados.endereco;
+            const telefone = dados.telefone;
+            const cidade = dados.cidade;
+            const estado = dados.estado;
+            const cep = dados.cep;
             const tipo_usuario = dados.tipo_usuario
-            if (usuario_id, nome, email, senha, tipo_usuario) {
-                const usuario = new Usuario(usuario_id, nome, email, senha, tipo_usuario);
+            if (usuario_id, nome, email, endereco, telefone, cidade, estado, cep, tipo_usuario) {
+                const usuario = new Usuario(0, nome, email, endereco, cidade, estado, cep, tipo_usuario);
                 usuario.gravar().then(() => {
                     resposta.status(200).json({
                         status: true,
@@ -47,10 +51,14 @@ export default class UsuarioCTRL {
             const usuario_id = dados.usuario_id;
             const nome = dados.nome;
             const email = dados.email;
-            const senha = dados.senha;
+            const endereco = dados.endereco;
+            const telefone = dados.telefone;
+            const cidade = dados.cidade;
+            const estado = dados.estado;
+            const cep = dados.cep;
             const tipo_usuario = dados.tipo_usuario
-            if (usuario_id, nome, email, senha, tipo_usuario) {
-                const usuario = new Usuario(usuario_id, nome, email, senha, tipo_usuario);
+            if (usuario_id, nome, email, endereco, telefone, cidade, estado, cep, tipo_usuario) {
+                const usuario = new Usuario(usuario_id, nome, email, endereco, cidade, estado, cep, tipo_usuario);
                 usuario.gravar().then(() => {
                     resposta.status(200).json({
                         status: true,
@@ -132,26 +140,4 @@ export default class UsuarioCTRL {
             });
         }
     }
-
-    // consultarPeloCPF(requisicao, resposta) {
-    //     resposta.type('application/json');
-    //     const cpf_cam = requisicao.params['cpf_cam'];
-    //     if (requisicao.method === "GET") {
-    //         const camareiro = new Camareiro();
-    //         camareiro.consultarCPF(cpf_cam).then((camareiros) => {
-    //             resposta.status(200).json(camareiros);
-    //         }).catch((erro) => {
-    //             resposta.status(500).json({
-    //                 status:false,
-    //                 mensagem: erro.message
-    //             })
-    //         });
-    //     }
-    //     else {
-    //         resposta.status(400).json({
-    //             status:false,
-    //             mensagem:'Método não permitido ou camareiro no formato JSON não fornecido.'
-    //         });
-    //     }
-    // }
 }

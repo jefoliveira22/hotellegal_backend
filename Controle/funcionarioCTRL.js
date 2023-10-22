@@ -8,14 +8,18 @@ export default class FuncionarioCTRL {
         if (requisicao.method === "POST" && requisicao.is('application/json')) {
             const dados = requisicao.body;
             const funcionario_id = dados.funcionario_id;
+            const sexo = dados.sexo;
+            const datanasc = dados.datanasc;
             const cargo = dados.cargo;
             const salario = dados.salario;
+            const nis = dados.nis;
+            const senha = dados.senha;
             let usuario = dados.usuario;
-            if (funcionario_id, cargo, salario, usuario) {
-                const usuariopadrao = new Usuario(0, usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario);
+            if (funcionario_id, sexo, datanasc, cargo, salario, nis, senha, usuario) {
+                const usuariopadrao = new Usuario(0, usuario.nome, usuario.email, usuario.endereco, usuario.telefone, usuario.cidade, usuario.estado, usuario.cep, usuario.tipo_usuario);
                 usuariopadrao.gravar().then(() => {
                     usuario["usuario_id"] = usuariopadrao.usuario_id
-                    const funcionario = new Funcionario(0, cargo, salario, usuario);
+                    const funcionario = new Funcionario(0, sexo, datanasc, cargo, salario, nis, senha, usuario);
                     funcionario.gravar().then(() => {
                         resposta.status(200).json({
                             status: true,
@@ -50,13 +54,17 @@ export default class FuncionarioCTRL {
         if (requisicao.method === "PUT" && requisicao.is('application/json')) {
             const dados = requisicao.body;
             const funcionario_id = dados.funcionario_id;
+            const sexo = dados.sexo;
+            const datanasc = dados.datanasc;
             const cargo = dados.cargo;
             const salario = dados.salario;
+            const nis = dados.nis;
+            const senha = dados.senha;
             let usuario = dados.usuario;
-            if (funcionario_id, cargo, salario, usuario) {
-                const usuariopadrao = new Usuario(usuario.usuario_id, usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario);
+            if (funcionario_id, sexo, datanasc, cargo, salario, nis, senha, usuario) {
+                const usuariopadrao = new Usuario(usuario.usuario_id, usuario.nome, usuario.email, usuario.endereco, usuario.telefone, usuario.cidade, usuario.estado, usuario.cep, usuario.tipo_usuario);
                 usuariopadrao.atualizar().then(() => {
-                    const funcionario = new Funcionario(funcionario_id, cargo, salario, usuario);
+                    const funcionario = new Funcionario(funcionario_id, sexo, datanasc, cargo, salario, nis, senha, usuario);
                     funcionario.atualizar().then(() => {
                         resposta.status(200).json({
                             status: true,

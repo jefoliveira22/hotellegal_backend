@@ -8,14 +8,18 @@ export default class FuncionarioCTRL {
         if (requisicao.method === "POST" && requisicao.is('application/json')) {
             const dados = requisicao.body;
             const cliente_id = dados.cliente_id;
-            const endereco = dados.endereco;
-            const telefone = dados.telefone;
+            const cpf = dados.cpf;
+            const datanasc = dados.datanasc;
+            const nacionalidade = dados.nacionalidade;
+            const profissao = dados.profissao;
+            const sexo = dados.sexo;
+            const senha = dados.senha;
             let usuario = dados.usuario;
-            if (cliente_id, endereco, telefone, usuario) {
-                const usuariopadrao = new Usuario(0, usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario);
+            if (cliente_id, cpf, datanasc, nacionalidade, profissao, sexo, senha, usuario) {
+                const usuariopadrao = new Usuario(0, usuario.nome, usuario.email, usuario.endereco, usuario.telefone, usuario.cidade, usuario.estado, usuario.cep, usuario.tipo_usuario);
                 usuariopadrao.gravar().then(() => {
                     usuario["usuario_id"] = usuariopadrao.usuario_id
-                    const cliente = new Cliente(0, endereco, telefone, usuario);
+                    const cliente = new Cliente(0, cpf, datanasc, nacionalidade, profissao, sexo, senha, usuario);
                     cliente.gravar().then(() => {
                         resposta.status(200).json({
                             status: true,
@@ -50,13 +54,17 @@ export default class FuncionarioCTRL {
         if (requisicao.method === "PUT" && requisicao.is('application/json')) {
             const dados = requisicao.body;
             const cliente_id = dados.cliente_id;
-            const endereco = dados.endereco;
-            const telefone = dados.telefone;
+            const cpf = dados.cpf;
+            const datanasc = dados.datanasc;
+            const nacionalidade = dados.nacionalidade;
+            const profissao = dados.profissao;
+            const sexo = dados.sexo;
+            const senha = dados.senha;
             let usuario = dados.usuario;
-            if (cliente_id, endereco, telefone, usuario) {
-                const usuariopadrao = new Usuario(usuario.usuario_id, usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario);
+            if (cliente_id, cpf, datanasc, nacionalidade, profissao, sexo, senha, usuario) {
+                const usuariopadrao = new Usuario(usuario.usuario_id, usuario.nome, usuario.email, usuario.endereco, usuario.telefone, usuario.cidade, usuario.estado, usuario.cep, usuario.tipo_usuario);
                 usuariopadrao.atualizar().then(() => {
-                    const cliente = new Cliente(cliente_id, endereco, telefone, usuario);
+                    const cliente = new Cliente(cliente_id, cpf, datanasc, nacionalidade, profissao, sexo, senha, usuario);
                     cliente.atualizar().then(() => {
                         resposta.status(200).json({
                             status: true,

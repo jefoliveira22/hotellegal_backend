@@ -5,8 +5,8 @@ export default class UsuarioBD {
     async incluir(usuario) {
         if (usuario instanceof Usuario) {
             const conexao = await conectar();
-            const sql = "INSERT INTO usuarios(nome,email,senha,tipo_usuario) VALUES(?,?,?,?)";
-            const valores = [usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario];
+            const sql = "INSERT INTO usuarios(nome,email,endereco,telefone,cidade,estado,cep,tipo_usuario) VALUES(?,?,?,?,?,?,?,?)";
+            const valores = [usuario.nome, usuario.email, usuario.endereco, usuario.telefone, usuario.cidade, usuario.estado, usuario.cep, usuario.tipo_usuario];
             const resultado = await conexao.query(sql, valores);
             return await resultado[0].insertId;
         }
@@ -15,8 +15,8 @@ export default class UsuarioBD {
     async alterar(usuario) {
         if (usuario instanceof Usuario) {
             const conexao = await conectar();
-            const sql = "UPDATE usuarios SET nome=?, email=?, senha=?, tipo_usuario=? where usuario_id=?";
-            const valores = [usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario, usuario.usuario_id];
+            const sql = "UPDATE usuarios SET nome=?, email=?, endereco=?, telefone=?, cidade=?, estado=?, cep=?, tipo_usuario=? where usuario_id=?";
+            const valores = [usuario.nome, usuario.email, usuario.endereco, usuario.telefone, usuario.cidade, usuario.estado, usuario.cep, usuario.tipo_usuario, usuario.usuario_id];
             await conexao.query(sql, valores);
         }
     }
@@ -36,7 +36,7 @@ export default class UsuarioBD {
         const [rows] = await conexao.query(sql);
         const listausuario = [];
         for (const row of rows) {
-            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['senha'], row['tipo_usuario']);
+            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['endereco'], row['telefone'], row['cidade'], row['estado'], row['cep'], row['tipo_usuario']);
             listausuario.push(usuario);
         }
         return listausuario;
@@ -49,7 +49,7 @@ export default class UsuarioBD {
         const [rows] = await conexao.query(sql, valores);
         const listausuario = [];
         for (const row of rows) {
-            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['senha'], row['tipo_usuario']);
+            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['endereco'], row['telefone'], row['cidade'], row['estado'], row['cep'], row['tipo_usuario']);
             listausuario.push(usuario);
         }
         return listausuario;

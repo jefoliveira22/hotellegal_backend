@@ -4,15 +4,23 @@ import ClienteBD from "../Persistencia/clienteBD.js";
 export default class Cliente {
 
     #cliente_id
-    #endereco
-    #telefone
+    #cpf
+    #datanasc
+    #nacionalidade
+    #profissao
+    #sexo
+    #senha
     #Usuario
 
 
-    constructor(cliente_id, endereco, telefone, Usuario) {
+    constructor(cliente_id, cpf, datanasc, nacionalidade, profissao, sexo, senha, Usuario) {
         this.#cliente_id = cliente_id;
-        this.#endereco = endereco;
-        this.#telefone = telefone;
+        this.#cpf = cpf;
+        this.#datanasc = datanasc;
+        this.#nacionalidade = nacionalidade;
+        this.#profissao = profissao;
+        this.#sexo = sexo;
+        this.#senha = senha;
         this.#Usuario = Usuario;
     }
 
@@ -24,19 +32,52 @@ export default class Cliente {
         this.#cliente_id = novocliente_id;
     }
 
-    get endereco() {
-        return this.#endereco;
+    get cpf() {
+        return this.#cpf;
     }
 
-    set endereco(novoendereco) {
-        this.#endereco = novoendereco;
+    set cpf(novocpf) {
+        this.#cpf = novocpf;
     }
 
-    get telefone() {
-        return this.#telefone;
+    get datanasc() {
+        return this.#datanasc;
     }
-    set telefone(novotelefone) {
-        this.#telefone = novotelefone;
+
+    set datanasc(novodatanasc) {
+        this.#datanasc = novodatanasc;
+    }
+
+    get nacionalidade() {
+        return this.#nacionalidade;
+    }
+
+    set nacionalidade(novonacionalidade) {
+        this.#nacionalidade = novonacionalidade;
+    }
+    
+    get profissao() {
+        return this.#profissao;
+    }
+
+    set profissao(novoprofissao) {
+        this.#profissao = novoprofissao;
+    }
+
+    get sexo() {
+        return this.#sexo;
+    }
+
+    set sexo(novosexo) {
+        this.#sexo = novosexo;
+    }
+
+    get senha() {
+        return this.#senha;
+    }
+
+    set senha(novosenha) {
+        this.#senha = novosenha;
     }
 
     get usuario() {
@@ -50,9 +91,13 @@ export default class Cliente {
     toJSON() {
         return {
             "cliente_id": this.#cliente_id,
-            "endereco": this.#endereco,
-            "telefone": this.#telefone,
-            "usuario": this.#Usuario,
+            "cpf": this.#cpf,
+            "datanasc": this.#datanasc,
+            "nacionalidade": this.#nacionalidade,
+            "profissao": this.#profissao,
+            "sexo": this.#sexo,
+            "senha": this.#senha,
+            "usuario": this.#Usuario
         }
     }
 

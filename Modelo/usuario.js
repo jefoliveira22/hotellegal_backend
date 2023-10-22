@@ -5,14 +5,22 @@ export default class Usuario {
     #usuario_id
     #nome
     #email
-    #senha
+    #endereco
+    #telefone
+    #cidade
+    #estado
+    #cep
     #tipo_usuario
   
-    constructor(usuario_id, nome, email, senha, tipo_usuario) {
+    constructor(usuario_id, nome, email, endereco, telefone, cidade, estado, cep, tipo_usuario) {
         this.#usuario_id = usuario_id;
         this.#nome = nome;
         this.#email = email;
-        this.#senha = senha;
+        this.#endereco = endereco;
+        this.#telefone = telefone;
+        this.#cidade = cidade;
+        this.#estado = estado;
+        this.#cep = cep;
         this.#tipo_usuario = tipo_usuario;
     }
     
@@ -40,12 +48,44 @@ export default class Usuario {
         this.#email = novo_usuemail;
     }
 
-    get senha() {
-        return this.#senha;
+    get endereco() {
+        return this.#endereco;
     }
 
-    set senha(novo_ususenha) {
-        this.#senha = novo_ususenha;
+    set endereco(novo_endereco) {
+        this.#endereco = novo_endereco;
+    }
+
+    get telefone() {
+        return this.#telefone;
+    }
+
+    set telefone(novo_telefone) {
+        this.#telefone = novo_telefone;
+    }
+
+    get cidade() {
+        return this.#cidade;
+    }
+
+    set cidade(novo_cidade) {
+        this.#cidade = novo_cidade;
+    }
+
+    get estado() {
+        return this.#estado;
+    }
+
+    set estado(novo_estado) {
+        this.#estado = novo_estado;
+    }
+
+    get cep() {
+        return this.#cep;
+    }
+
+    set cep(novo_cep) {
+        this.#cep = novo_cep;
     }
 
     get tipo_usuario() {
@@ -63,7 +103,11 @@ export default class Usuario {
             "usuario_id": this.#usuario_id,
             "nome":  this.#nome,
             "email": this.#email,
-            "senha": this.#senha,
+            "endereco": this.#endereco,
+            "telefone": this.#telefone,
+            "cidade": this.#cidade,
+            "estado": this.#estado,
+            "cep": this.#cep,
             "tipo_usuario": this.#tipo_usuario
         }
     }

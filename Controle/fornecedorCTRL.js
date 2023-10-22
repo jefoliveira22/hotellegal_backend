@@ -8,14 +8,16 @@ export default class FornecedorCTRL {
         if (requisicao.method === "POST" && requisicao.is('application/json')) {
             const dados = requisicao.body;
             const fornecedor_id = dados.fornecedor_id;
-            const nome_empresa = dados.nome_empresa;
+            const razao_social = dados.razao_social;
             const cnpj = dados.cnpj;
+            const ie = dados.ie;
+            const categoria = dados.categoria;
             let usuario = dados.usuario;
-            if (fornecedor_id, nome_empresa, cnpj, usuario) {
-                const usuariopadrao = new Usuario(0, usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario);
+            if (fornecedor_id, razao_social, cnpj, ie, categoria, usuario) {
+                const usuariopadrao = new Usuario(0, usuario.nome, usuario.email, usuario.endereco, usuario.telefone, usuario.cidade, usuario.estado, usuario.cep, usuario.tipo_usuario);
                 usuariopadrao.gravar().then(() => {
                     usuario["usuario_id"] = usuariopadrao.usuario_id
-                    const fornecedor = new Fornecedor(0, nome_empresa, cnpj, usuario);
+                    const fornecedor = new Fornecedor(0, razao_social, cnpj, ie, categoria, usuario);
                     fornecedor.gravar().then(() => {
                         resposta.status(200).json({
                             status: true,
@@ -50,13 +52,15 @@ export default class FornecedorCTRL {
         if (requisicao.method === "PUT" && requisicao.is('application/json')) {
             const dados = requisicao.body;
             const fornecedor_id = dados.fornecedor_id;
-            const nome_empresa = dados.nome_empresa;
+            const razao_social = dados.razao_social;
             const cnpj = dados.cnpj;
+            const ie = dados.ie;
+            const categoria = dados.categoria;
             let usuario = dados.usuario;
-            if (fornecedor_id, nome_empresa, cnpj, usuario) {
-                const usuariopadrao = new Usuario(usuario.usuario_id, usuario.nome, usuario.email, usuario.senha, usuario.tipo_usuario);
+            if (fornecedor_id, razao_social, cnpj, ie, categoria, usuario) {
+                const usuariopadrao = new Usuario(usuario.usuario_id, usuario.nome, usuario.email, usuario.endereco, usuario.telefone, usuario.cidade, usuario.estado, usuario.cep, usuario.tipo_usuario);
                 usuariopadrao.atualizar().then(() => {
-                    const fornecedor = new Fornecedor(fornecedor_id, nome_empresa, cnpj, usuario);
+                    const fornecedor = new Fornecedor(fornecedor_id, razao_social, cnpj, ie, categoria, usuario);
                     fornecedor.atualizar().then(() => {
                         resposta.status(200).json({
                             status: true,

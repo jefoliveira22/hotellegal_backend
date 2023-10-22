@@ -1,18 +1,21 @@
 import FornecedorBD from "../Persistencia/fornecedorBD.js";
-import UsuarioBD from "../Persistencia/usuarioBD.js";
 
 export default class Fornecedor {
 
     #fornecedor_id
-    #nome_empresa
+    #razao_social
     #cnpj
+    #ie
+    #categoria
     #Usuario
 
 
-    constructor(fornecedor_id, nome_empresa, cnpj, Usuario) {
+    constructor(fornecedor_id, razao_social, cnpj, ie, categoria, Usuario) {
         this.#fornecedor_id = fornecedor_id;
-        this.#nome_empresa = nome_empresa;
+        this.#razao_social = razao_social;
         this.#cnpj = cnpj;
+        this.#ie = ie;
+        this.#categoria = categoria;
         this.#Usuario = Usuario;
     }
 
@@ -24,19 +27,36 @@ export default class Fornecedor {
         this.#fornecedor_id = novofornecedor_id;
     }
 
-    get nome_empresa() {
-        return this.#nome_empresa;
+    get razao_social() {
+        return this.#razao_social;
     }
 
-    set nome_empresa(novonome_empresa) {
-        this.#nome_empresa = novonome_empresa;
+    set razao_social(novorazao_social) {
+        this.#razao_social = novorazao_social;
     }
+
     get cnpj() {
         return this.#cnpj;
     }
 
     set cnpj(novocnpj) {
         this.#cnpj = novocnpj;
+    }
+
+    get ie() {
+        return this.#ie;
+    }
+
+    set ie(novoie) {
+        this.#ie = novoie;
+    }
+
+    get categoria() {
+        return this.#categoria;
+    }
+
+    set categoria(novocategoria) {
+        this.#categoria = novocategoria;
     }
 
     get usuario() {
@@ -50,9 +70,11 @@ export default class Fornecedor {
     toJSON() {
         return {
             "fornecedor_id": this.#fornecedor_id,
-            "nome_empresa": this.#nome_empresa,
+            "razao_social": this.#razao_social,
             "cnpj": this.#cnpj,
-            "usuario": this.#Usuario,
+            "ie": this.#ie,
+            "categoria": this.#categoria,
+            "usuario": this.#Usuario
         }
     }
 

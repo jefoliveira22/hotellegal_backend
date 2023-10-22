@@ -4,15 +4,23 @@ import UsuarioBD from "../Persistencia/usuarioBD.js";
 export default class Funcionario {
 
     #funcionario_id
+    #sexo
+    #datanasc
     #cargo
     #salario
+    #nis
+    #senha
     #Usuario
        
   
-    constructor(funcionario_id, cargo, salario, Usuario) {
+    constructor(funcionario_id, sexo, datanasc, cargo, salario, nis, senha, Usuario) {
         this.#funcionario_id = funcionario_id;
+        this.#sexo = sexo,
+        this.#datanasc = datanasc,
         this.#cargo = cargo;
-        this.#salario = salario;  
+        this.#salario = salario;
+        this.#nis = nis;
+        this.#senha = senha;
         this.#Usuario = Usuario;
     }
     
@@ -22,6 +30,22 @@ export default class Funcionario {
 
     set funcionario_id(novofuncionario_id) {
         this.#funcionario_id = novofuncionario_id;
+    }
+
+    get sexo() {
+        return this.#sexo;
+    }
+
+    set sexo(novosexo) {
+        this.#sexo = novosexo;
+    }
+
+    get datanasc() {
+        return this.#datanasc;
+    }
+
+    set datanasc(novodatanasc) {
+        this.#datanasc = novodatanasc;
     }
 
     get cargo() {
@@ -39,6 +63,22 @@ export default class Funcionario {
     set salario(novosalario) {
         this.#salario = novosalario;
     }
+
+    get nis() {
+        return this.#nis;
+    }
+
+    set nis(novonis) {
+        this.#nis = novonis;
+    }
+
+    get senha() {
+        return this.#senha;
+    }
+
+    set senha(novosenha) {
+        this.#senha = novosenha;
+    }
      
     get usuario() {
         return this.#Usuario;
@@ -51,9 +91,13 @@ export default class Funcionario {
     toJSON() {
         return {
             "funcionario_id" : this.#funcionario_id,
+            "sexo": this.#sexo,
+            "datanasc": this.#datanasc,
             "cargo" :   this.#cargo,  
             "salario" : this.#salario,
-            "usuario" : this.#Usuario,
+            "nis": this.#nis,
+            "senha": this.#senha,
+            "usuario" : this.#Usuario
         }
     }
 
