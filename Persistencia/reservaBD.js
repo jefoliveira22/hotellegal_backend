@@ -1,6 +1,7 @@
 import Reserva from "../Modelo/reserva.js";
 import conectar from "./conexao.js";
-import Hospede from "../Modelo/hospede.js";
+import Usuario from "../Modelo/usuario.js";
+import Cliente from "../Modelo/cliente.js";
 
 export default class ReservaBD {
     async incluir(reserva) {
@@ -42,11 +43,12 @@ export default class ReservaBD {
 
     async consultar() {
         const conexao = await conectar();
-        const sql = "SELECT * FROM reservas INNER JOIN hospedes ON reservas.cpf_hosp = hospedes.cpf";
+        const sql = "SELECT * FROM reservas INNER JOIN clientes ON reservas.cpf_hosp = clientes.cpf INNER JOIN usuarios ON clientes.usuario_id = usuarios.usuario_id";
         const [rows] = await conexao.query(sql);
         const listaReservas = [];
         for (const row of rows) {
-            const hospede = new Hospede(row['cpf'], row['nome'], row['datanasc'], row['email'], row['telefone'], row['endereco'], row['cidade'], row['estado'], row['cep'], row['profissao'], row['nacionalidade'], row['sexo']);
+            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['endereco'], row['telefone'], row['cidade'], row['estado'], row['cep'], row['tipo_usuario']);
+            const hospede = new Cliente(row['cliente_id'], row['cpf'], row['datanasc'], row['nacionalidade'], row['profissao'], row['sexo'], row['senha'], usuario);
             const reserva = new Reserva(row['id_reserva'], row['checkin'], row['checkout'], row['qte_pessoa_mais'], row['qte_pessoa_menos'], row['acomodacao'], row['canc_free'], row['ativo'], hospede);
             listaReservas.push(reserva);
         }
@@ -55,11 +57,12 @@ export default class ReservaBD {
 
     async consultarUltimoID() {
         const conexao = await conectar();
-        const sql = "SELECT * FROM reservas INNER JOIN hospedes ON reservas.cpf_hosp = hospedes.cpf WHERE id_reserva ORDER BY id_reserva DESC limit 1";
+        const sql = "SELECT * FROM reservas INNER JOIN clientes ON reservas.cpf_hosp = clientes.cpf INNER JOIN usuarios ON clientes.usuario_id = usuarios.usuario_id WHERE id_reserva ORDER BY id_reserva DESC limit 1";
         const [rows] = await conexao.query(sql);
         const listaReservas = [];
         for (const row of rows) {
-            const hospede = new Hospede(row['cpf'], row['nome'], row['datanasc'], row['email'], row['telefone'], row['endereco'], row['cidade'], row['estado'], row['cep'], row['profissao'], row['nacionalidade'], row['sexo']);
+            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['endereco'], row['telefone'], row['cidade'], row['estado'], row['cep'], row['tipo_usuario']);
+            const hospede = new Cliente(row['cliente_id'], row['cpf'], row['datanasc'], row['nacionalidade'], row['profissao'], row['sexo'], row['senha'], usuario);
             const reserva = new Reserva(row['id_reserva'], row['checkin'], row['checkout'], row['qte_pessoa_mais'], row['qte_pessoa_menos'], row['acomodacao'], row['canc_free'], row['ativo'], hospede);
             listaReservas.push(reserva);
         }

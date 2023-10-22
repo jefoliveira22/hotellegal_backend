@@ -1,7 +1,10 @@
 import Consumo_Serv from "../Modelo/consumo_serv.js";
-import Hospede from "../Modelo/hospede.js";
+import Usuario from "../Modelo/usuario.js";
+import Cliente from "../Modelo/cliente.js";
 import Reserva from "../Modelo/reserva.js";
 import Hospedagem from "../Modelo/hospedagem.js";
+import Itens_Servico from "../Modelo/itensservico.js";
+import Servico from "../Modelo/servico.js";
 
 import conectar from "./conexao.js";
 
@@ -36,14 +39,17 @@ export default class Consumo_ServBD {
 
     async consultar() {
         const conexao = await conectar();
-        const sql = "SELECT * FROM consumo_serv INNER JOIN hospedagem ON consumo_serv.id_hospedagem = hospedagem.id_hospedagem INNER JOIN reservas ON hospedagem.id_reserva = reservas.id_reserva INNER JOIN hospedes ON reservas.cpf_hosp = hospedes.cpf;";
+        const sql = "SELECT * FROM consumo_serv INNER JOIN hospedagem ON consumo_serv.id_hospedagem = hospedagem.id_hospedagem INNER JOIN reservas ON hospedagem.id_reserva = reservas.id_reserva INNER JOIN clientes ON reservas.cpf_hosp = clientes.cpf INNER JOIN usuarios ON clientes.usuario_id = usuarios.usuario_id;";
         const [rows] = await conexao.query(sql);
         const listaConsumoServ = [];
+        const consumofunc = new Consumo_ServBD();
         for (const row of rows) {
-            const hospede = new Hospede(row['cpf'], row['nome'], row['datanasc'], row['email'], row['telefone'], row['endereco'], row['cidade'], row['estado'], row['cep'], row['profissao'], row['nacionalidade'], row['sexo']);
+            let listaServicos = await consumofunc.consultaDetalhada(row['id_consumo_serv']);
+            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['endereco'], row['telefone'], row['cidade'], row['estado'], row['cep'], row['tipo_usuario']);
+            const hospede = new Cliente(row['cliente_id'], row['cpf'], row['datanasc'], row['nacionalidade'], row['profissao'], row['sexo'], row['senha'], usuario);
             const reserva = new Reserva(row['id_reserva'], row['checkin'], row['checkout'], row['qte_pessoa_mais'], row['qte_pessoa_menos'], row['acomodacao'], row['canc_free'], row['ativo'], hospede);
             const hospedagem = new Hospedagem(row['id_hospedagem'], row['data_ini'], row['data_fim'], row['valor_tot'], row['h_ativo'], reserva);
-            const consumo_serv = new Consumo_Serv(row['id_consumo_serv'], row['data_serv'], row['desconto_serv'], row['valor_serv'], row['listaServicos'], hospedagem);
+            const consumo_serv = new Consumo_Serv(row['id_consumo_serv'], row['data_serv'], row['desconto_serv'], row['valor_serv'], listaServicos, hospedagem);
             listaConsumoServ.push(consumo_serv);
         }
         return listaConsumoServ;
@@ -51,15 +57,18 @@ export default class Consumo_ServBD {
     
     async consultarNome(nome) {
         const conexao = await conectar();
-        const sql = "SELECT * FROM consumo_serv INNER JOIN hospedagem ON consumo_serv.id_hospedagem = hospedagem.id_hospedagem INNER JOIN reservas ON hospedagem.id_reserva = reservas.id_reserva INNER JOIN hospedes ON reservas.cpf_hosp = hospedes.cpf WHERE hospedes.nome LIKE ?;";
+        const sql = "SELECT * FROM consumo_serv INNER JOIN hospedagem ON consumo_serv.id_hospedagem = hospedagem.id_hospedagem INNER JOIN reservas ON hospedagem.id_reserva = reservas.id_reserva INNER JOIN clientes ON reservas.cpf_hosp = clientes.cpf INNER JOIN usuarios on clientes.usuario_id = usuarios.usuario_id WHERE usuarios.nome LIKE ?;";
         const valores = ['%' + nome + '%'];
         const [rows] = await conexao.query(sql, valores);
         const listaConsumoServ = [];
+        const consumofunc = new Consumo_ServBD();
         for (const row of rows) {
-            const hospede = new Hospede(row['cpf'], row['nome'], row['datanasc'], row['email'], row['telefone'], row['endereco'], row['cidade'], row['estado'], row['cep'], row['profissao'], row['nacionalidade'], row['sexo']);
+            let listaServicos = await consumofunc.consultaDetalhada(row['id_consumo_serv']);
+            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['endereco'], row['telefone'], row['cidade'], row['estado'], row['cep'], row['tipo_usuario']);
+            const hospede = new Cliente(row['cliente_id'], row['cpf'], row['datanasc'], row['nacionalidade'], row['profissao'], row['sexo'], row['senha'], usuario);
             const reserva = new Reserva(row['id_reserva'], row['checkin'], row['checkout'], row['qte_pessoa_mais'], row['qte_pessoa_menos'], row['acomodacao'], row['canc_free'], row['ativo'], hospede);
             const hospedagem = new Hospedagem(row['id_hospedagem'], row['data_ini'], row['data_fim'], row['valor_tot'], row['h_ativo'], reserva);
-            const consumo_serv = new Consumo_Serv(row['id_consumo_serv'], row['data_serv'], row['desconto_serv'], row['valor_serv'], row['listaServicos'], hospedagem)
+            const consumo_serv = new Consumo_Serv(row['id_consumo_serv'], row['data_serv'], row['desconto_serv'], row['valor_serv'], listaServicos, hospedagem)
             listaConsumoServ.push(consumo_serv);
         }
         return listaConsumoServ;
@@ -77,5 +86,19 @@ export default class Consumo_ServBD {
             listaConsumoServ.push(consumo_serv);
         }
         return listaConsumoServ;
+    }
+
+    async consultaDetalhada(id) {
+        const conexao = await conectar();
+        const sql = "SELECT * FROM itens_servicos INNER JOIN servicos ON itens_servicos.id_servico = servicos.id_servico WHERE itens_servicos.id_consumo_serv = ?;";
+        const valores = [id];
+        const [rows] = await conexao.query(sql, valores);
+        const lista = [];
+        for (const row of rows) {
+            const servico = new Servico(row['id_servico'], row['nome_serv'], row['descricao_serv'], row['valor']);
+            const itens = new Itens_Servico(row['id_servico'], row['id_consumo_serv'], row['qtd_serv'], row['valor_serv'], servico);
+            lista.push(itens);
+        }
+        return lista;
     }
 }

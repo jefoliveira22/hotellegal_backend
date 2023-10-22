@@ -1,5 +1,6 @@
 import Consumo from "../Modelo/consumo.js";
-import Hospede from "../Modelo/hospede.js";
+import Usuario from "../Modelo/usuario.js";
+import Cliente from "../Modelo/cliente.js";
 import Reserva from "../Modelo/reserva.js";
 import Hospedagem from "../Modelo/hospedagem.js";
 import Itens_Consumo from "../Modelo/itensconsumo.js";
@@ -38,13 +39,14 @@ export default class ConsumoBD {
 
     async consultar() {
         const conexao = await conectar();
-        const sql = "SELECT * FROM consumos INNER JOIN hospedagem ON consumos.id_hospedagem = hospedagem.id_hospedagem INNER JOIN reservas ON hospedagem.id_reserva = reservas.id_reserva INNER JOIN hospedes ON reservas.cpf_hosp = hospedes.cpf;";
+        const sql = "SELECT * FROM consumos INNER JOIN hospedagem ON consumos.id_hospedagem = hospedagem.id_hospedagem  INNER JOIN reservas ON hospedagem.id_reserva = reservas.id_reserva  INNER JOIN clientes ON reservas.cpf_hosp = clientes.cpf INNER JOIN usuarios ON clientes.usuario_id = usuarios.usuario_id;";
         const [rows] = await conexao.query(sql);
         const listaConsumo = [];
         const consumofunc = new ConsumoBD();
         for (const row of rows) {
             let listaProdutos = await consumofunc.consultaDetalhada(row['id_consumo']);
-            const hospede = new Hospede(row['cpf'], row['nome'], row['datanasc'], row['email'], row['telefone'], row['endereco'], row['cidade'], row['estado'], row['cep'], row['profissao'], row['nacionalidade'], row['sexo']);
+            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['endereco'], row['telefone'], row['cidade'], row['estado'], row['cep'], row['tipo_usuario']);
+            const hospede = new Cliente(row['cliente_id'], row['cpf'], row['datanasc'], row['nacionalidade'], row['profissao'], row['sexo'], row['senha'], usuario);
             const reserva = new Reserva(row['id_reserva'], row['checkin'], row['checkout'], row['qte_pessoa_mais'], row['qte_pessoa_menos'], row['acomodacao'], row['canc_free'], row['ativo'], hospede);
             const hospedagem = new Hospedagem(row['id_hospedagem'], row['data_ini'], row['data_fim'], row['valor_tot'], row['h_ativo'], reserva);
             const consumo = new Consumo(row['id_consumo'], row['data_cons'], row['desconto'], row['valor'], listaProdutos, hospedagem);
@@ -55,14 +57,15 @@ export default class ConsumoBD {
     
     async consultarNome(nome) {
         const conexao = await conectar();
-        const sql = "SELECT * FROM consumos INNER JOIN hospedagem ON consumos.id_hospedagem = hospedagem.id_hospedagem INNER JOIN reservas ON hospedagem.id_reserva = reservas.id_reserva INNER JOIN hospedes ON reservas.cpf_hosp = hospedes.cpf WHERE hospedes.nome LIKE ?";
+        const sql = "SELECT * FROM consumos INNER JOIN hospedagem ON consumos.id_hospedagem = hospedagem.id_hospedagem INNER JOIN reservas ON hospedagem.id_reserva = reservas.id_reserva INNER JOIN clientes ON reservas.cpf_hosp = clientes.cpf INNER JOIN usuarios ON clientes.usuario_id = usuarios.usuario_id WHERE usuarios.nome LIKE ?;";
         const valores = ['%' + nome + '%'];
         const [rows] = await conexao.query(sql, valores);
         const listaConsumo = [];
         const consumofunc = new ConsumoBD();
         for (const row of rows) {
             let listaProdutos = await consumofunc.consultaDetalhada(row['id_consumo']);
-            const hospede = new Hospede(row['cpf'], row['nome'], row['datanasc'], row['email'], row['telefone'], row['endereco'], row['cidade'], row['estado'], row['cep'], row['profissao'], row['nacionalidade'], row['sexo']);
+            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['endereco'], row['telefone'], row['cidade'], row['estado'], row['cep'], row['tipo_usuario']);
+            const hospede = new Cliente(row['cliente_id'], row['cpf'], row['datanasc'], row['nacionalidade'], row['profissao'], row['sexo'], row['senha'], usuario);
             const reserva = new Reserva(row['id_reserva'], row['checkin'], row['checkout'], row['qte_pessoa_mais'], row['qte_pessoa_menos'], row['acomodacao'], row['canc_free'], row['ativo'], hospede);
             const hospedagem = new Hospedagem(row['id_hospedagem'], row['data_ini'], row['data_fim'], row['valor_tot'], row['h_ativo'], reserva);
             const consumo = new Consumo(row['id_consumo'], row['data_cons'], row['desconto'], row['valor'], listaProdutos, hospedagem);

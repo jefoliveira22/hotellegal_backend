@@ -6,13 +6,15 @@ export default class Itens_Servico {
     #id_consumo_serv
     #qtd_serv
     #valor_serv
+    #servico
     
   
-    constructor(id_servico, id_consumo_serv, qtd_serv, valor_serv) {
+    constructor(id_servico, id_consumo_serv, qtd_serv, valor_serv, servico) {
         this.#id_servico = id_servico;
         this.#id_consumo_serv = id_consumo_serv;
         this.#qtd_serv = qtd_serv;
         this.#valor_serv = valor_serv;
+        this.#servico = servico;
     }
     
     get id_servico() {
@@ -47,12 +49,21 @@ export default class Itens_Servico {
         this.#valor_serv = pvalor_serv;
     } 
 
+    get servico() {
+        return this.#servico;
+    }
+
+    set servico(pservico) {
+        this.#servico = pservico;
+    } 
+
     toJSON() {
         return {
             "id_servico" : this.#id_servico,
             "id_consumo_serv" : this.#id_consumo_serv,
             "qtd_serv" : this.#qtd_serv,
             "valor_serv" : this.#valor_serv,
+            "servico": this.#servico
         }
     }
 
