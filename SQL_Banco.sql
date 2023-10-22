@@ -199,4 +199,4 @@ CREATE TABLE atividade_camareiro (
 );
 
 INSERT INTO usuarios(nome,email,endereco,telefone,cidade,estado,cep,tipo_usuario) VALUES("Administrador","adm@hotellegal.com","None","00","None","None","None","gerente");
-INSERT INTO funcionarios (usuario_id,sexo,datanasc,cargo,salario,nis,senha) VALUES("1","Masculino","1970-01-01","gerente","000.00","0000","123");
+INSERT INTO funcionarios (usuario_id,sexo,datanasc,cargo,salario,nis,senha) VALUES("1","Masculino","1970-01-01","Gerente","000.00","0000","123");
