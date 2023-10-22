@@ -1,5 +1,7 @@
 import Despesa from "../Modelo/despesa.js";
 import conectar from "./conexao.js";
+import Usuario from "../Modelo/usuario.js";
+import Fornecedor from "../Modelo/fornecedor.js";
 
 export default class DespesaBD {
     async incluir(despesa) {
@@ -32,11 +34,13 @@ export default class DespesaBD {
 
     async consultar() {
         const conexao = await conectar();
-        const sql = "SELECT id_despesa, cod_tipo_despesa, nome_desp, nfe, fornecedor, DATE_FORMAT(data_comp, '%Y-%m-%d') AS data_comp, valortotal, obs, pago FROM despesas";
+        const sql = "SELECT * FROM despesas INNER JOIN fornecedores ON despesas.fornecedor = fornecedores.fornecedor_id INNER JOIN usuarios ON fornecedores.usuario_id = usuarios.usuario_id;";
         const [rows] = await conexao.query(sql);
         const listaDespesa = [];
         for (const row of rows) {
-            const despesa = new Despesa(row['id_despesa'], row['cod_tipo_despesa'], row['nome_desp'], row['nfe'], row['fornecedor'], row['data_comp'], row['valortotal'], row['obs'], row['pago']);
+            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['endereco'], row['telefone'], row['cidade'], row['estado'], row['cep'], row['tipo_usuario']);
+            const fornecedor = new Fornecedor(row['fornecedor_id'], row['razao_social'], row['cnpj'], row['ie'], row['categoria'], usuario);
+            const despesa = new Despesa(row['id_despesa'], row['cod_tipo_despesa'], row['nome_desp'], row['nfe'], fornecedor, row['data_comp'], row['valortotal'], row['obs'], row['pago']);
             listaDespesa.push(despesa);
         }
         return listaDespesa;
@@ -44,12 +48,14 @@ export default class DespesaBD {
     
     async consultarID(id_despesa) {
         const conexao = await conectar();
-        const sql = "SELECT id_despesa, cod_tipo_despesa, nome_desp, nfe, fornecedor, DATE_FORMAT(data_comp, '%Y-%m-%d') AS data_comp, valortotal, obs, pago FROM despesas where id_despesa = ?";
+        const sql = "SELECT * FROM despesas INNER JOIN fornecedores ON despesas.fornecedor = fornecedores.fornecedor_id INNER JOIN usuarios ON fornecedores.usuario_id = usuarios.usuario_id WHERE id_despesa = ?;";
         const valores = [id_despesa];
         const [rows] = await conexao.query(sql, valores);
         const listaDespesa = [];
         for (const row of rows) {
-            const despesa = new Despesa(row['id_despesa'], row['cod_tipo_despesa'], row['nome_desp'], row['nfe'], row['fornecedor'], row['data_comp'], row['valortotal'], row['obs'], row['pago']);
+            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['endereco'], row['telefone'], row['cidade'], row['estado'], row['cep'], row['tipo_usuario']);
+            const fornecedor = new Fornecedor(row['fornecedor_id'], row['razao_social'], row['cnpj'], row['ie'], row['categoria'], usuario);
+            const despesa = new Despesa(row['id_despesa'], row['cod_tipo_despesa'], row['nome_desp'], row['nfe'], fornecedor, row['data_comp'], row['valortotal'], row['obs'], row['pago']);
             listaDespesa.push(despesa);
         }
         return listaDespesa;

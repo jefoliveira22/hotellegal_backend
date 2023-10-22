@@ -168,14 +168,17 @@ CREATE TABLE despesas (
   cod_tipo_despesa int NOT NULL,
   nome_desp varchar(50) NOT NULL,
   nfe int NOT NULL,
-  fornecedor varchar(50) NOT NULL,
+  fornecedor INT NOT NULL,
   data_comp date NOT NULL,
   valortotal varchar(20) NOT NULL,
   obs varchar(255) NOT NULL,
   pago varchar(5) DEFAULT NULL,
-  CONSTRAINT cod_tipo_despesa 
+CONSTRAINT cod_tipo_despesa 
 	FOREIGN KEY (cod_tipo_despesa) 
-    REFERENCES tipos_despesa (cod_tipo_desp)
+    REFERENCES tipos_despesa (cod_tipo_desp),
+CONSTRAINT fornecedor
+	FOREIGN KEY (fornecedor)
+	REFERENCES fornecedores (fornecedor_id)
 );
 
 CREATE TABLE quarto (
