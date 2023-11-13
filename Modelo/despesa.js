@@ -138,4 +138,10 @@ export default class Despesa {
         const despesas = await despesaBD.consultarID(id_despesa);
         return despesas;
     }
+
+    async consultarID(data_comp) {
+        const despesaBD = new DespesaBD();
+        const despesas = await despesaBD.consultarPeriodo(data_comp);
+        return despesas;
+    }
 }

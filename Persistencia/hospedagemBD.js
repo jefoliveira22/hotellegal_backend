@@ -60,4 +60,30 @@ export default class HospedagemBD {
         }
         return listaHospedagem;
     }
+
+    async consultarPeriodo(data_ini) {
+        const conexao = await conectar();
+        const sql = "SELECT * FROM hospedagem WHERE data_ini BETWEEN '?' AND '?'";
+        const valores = [data_ini, data_ini];
+        const [rows] = await conexao.query(sql, valores);
+        const listaHospedagem = [];
+        for (const row of rows) {
+            const hospedagem = new Hospedagem(row['id_hospedagem'], row['data_ini'], row['data_fim'], row['valor_tot'], row['h_ativo']);
+            listaHospedagem.push(hospedagem);
+        }
+        return listaHospedagem;
+    }
+
+    async consultarStatus(h_ativo) {
+        const conexao = await conectar();
+        const sql = "SELECT * FROM hospedagem WHERE h_ativo='?'";
+        const valores = [h_ativo];
+        const [rows] = await conexao.query(sql, valores);
+        const listaHospedagem = [];
+        for (const row of rows) {
+            const hospedagem = new Hospedagem(row['id_hospedagem'], row['data_ini'], row['data_fim'], row['valor_tot'], row['h_ativo']);
+            listaHospedagem.push(hospedagem);
+        }
+        return listaHospedagem;
+    }
 }

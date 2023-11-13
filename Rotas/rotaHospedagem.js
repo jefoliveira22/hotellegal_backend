@@ -7,6 +7,8 @@ rotaHospedagem.post('/', hospedagemCtrl.gravar)
 .put('/', hospedagemCtrl.atualizar)
 .delete('/', hospedagemCtrl.excluir)
 .get('/', hospedagemCtrl.consultar)
-.get('/:id', hospedagemCtrl.consultarPeloID);
+.get('/:id', hospedagemCtrl.consultarPeloID)
+.get('/:data_ini', hospedagemCtrl.consultarPeloPeriodo)
+.get('/:h_ativo', hospedagemCtrl.consultarPeloStatus);
 
 export default rotaHospedagem;

@@ -104,4 +104,16 @@ export default class Hospedagem {
         const hospedagens = await hospedagemBD.consultarID(id);
         return hospedagens;
     }
+
+    async consultarPeriodo(data_ini) {
+        const hospedagemBD = new HospedagemBD();
+        const hospedagens = await hospedagemBD.consultarPeriodo(data_ini);
+        return hospedagens;
+    }
+
+    async consultarStatus(h_ativo) {
+        const hospedagemBD = new HospedagemBD();
+        const hospedagens = await hospedagemBD.consultarStatus(h_ativo);
+        return hospedagens;
+    }
 }

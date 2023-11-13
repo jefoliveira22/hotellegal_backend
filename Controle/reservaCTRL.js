@@ -218,4 +218,71 @@ export default class ReservaCTRL {
             });
         }
     }
+
+    consultarPeloPeriodo(requisicao, resposta) {
+        resposta.type('application/json');
+        const checkin = requisicao.params['checkin'];
+        console.log('Checkin recebido:', checkin);
+        if (requisicao.method === "GET") {
+            const reserva = new Reserva();
+            reserva.consultarPeriodo(checkin).then((reservas) => {
+                resposta.status(200).json(reservas);
+            }).catch((erro) => {
+                resposta.status(500).json({
+                    status: false,
+                    mensagem: erro.message
+                });
+            });
+        } else {
+            resposta.status(400).json({
+                status: false,
+                mensagem: 'Método não permitido ou reserva no formato JSON não fornecido.'
+            });
+        }
+    }
+    
+
+    consultarPeloHospede(requisicao, resposta) {
+        resposta.type('application/json');
+        const cpf_hosp = requisicao.params['cpf_hosp'];
+        if (requisicao.method === "GET") {
+            const reserva = new Reserva();
+            reserva.consultarPeloHospede(cpf_hosp).then((reservas) => {
+                resposta.status(200).json(reservas);
+            }).catch((erro) => {
+                resposta.status(500).json({
+                    status:false,
+                    mensagem: erro.message
+                })
+            });
+        }
+        else {
+            resposta.status(400).json({
+                status:false,
+                mensagem:'Método não permitido ou reserva no formato JSON não fornecido.'
+            });
+        }
+    }
+
+    consultarPeloStatus(requisicao, resposta) {
+        resposta.type('application/json');
+        const ativo = requisicao.params['ativo'];
+        if (requisicao.method === "GET") {
+            const reserva = new Reserva();
+            reserva.consultarPeloStatus(ativo).then((reservas) => {
+                resposta.status(200).json(reservas);
+            }).catch((erro) => {
+                resposta.status(500).json({
+                    status:false,
+                    mensagem: erro.message
+                })
+            });
+        }
+        else {
+            resposta.status(400).json({
+                status:false,
+                mensagem:'Método não permitido ou reserva no formato JSON não fornecido.'
+            });
+        }
+    }
 }

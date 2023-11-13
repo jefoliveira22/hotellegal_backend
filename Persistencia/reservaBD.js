@@ -81,4 +81,43 @@ export default class ReservaBD {
         }
         return listaReservas;
     }
+
+    async consultarPeriodo(checkin) {
+        const conexao = await conectar();
+        const sql = "SELECT * FROM reservas WHERE checkin BETWEEN ? AND ?";
+        const valores = [checkin, checkin];
+        const [rows] = await conexao.query(sql, valores);
+        const listaReservas = [];
+        for (const row of rows) {
+            const reserva = new Reserva(row['id_reserva'], row['checkin'], row['checkout'], row['qte_pessoa_mais'], row['qte_pessoa_menos'], row['acomodacao'], row['canc_free'], row['ativo']);
+            listaReservas.push(reserva);
+        }
+        return listaReservas;
+    }
+
+    async consultarHospede(cpf_hosp) {
+        const conexao = await conectar();
+        const sql = "SELECT r.*, u.nome FROM reservas r JOIN clientes c ON r.cpf_hosp = c.cpf JOIN usuarios u ON c.usuario_id = u.usuario_id WHERE u.nome LIKE %?%";
+        const valores = [cpf_hosp];
+        const [rows] = await conexao.query(sql, valores);
+        const listaReservas = [];
+        for (const row of rows) {
+            const reserva = new Reserva(row['id_reserva'], row['cpf_hosp'], row['checkin'], row['checkout'], row['qte_pessoa_mais'], row['qte_pessoa_menos'], row['acomodacao'], row['canc_free'], row['ativo']);
+            listaReservas.push(reserva);
+        }
+        return listaReservas;
+    }
+
+    async consultarStatus(ativo) {
+        const conexao = await conectar();
+        const sql = "SELECT id_reserva, cpf_hosp, DATE_FORMAT(checkin, '%Y-%m-%d') AS checkin, DATE_FORMAT(checkout, '%Y-%m-%d') AS checkout, qte_pessoa_mais,qte_pessoa_menos, acomodacao, canc_free, ativo FROM reservas where ativo=?";
+        const valores = [ativo];
+        const [rows] = await conexao.query(sql, valores);
+        const listaReservas = [];
+        for (const row of rows) {
+            const reserva = new Reserva(row['id_reserva'], row['checkin'], row['checkout'], row['qte_pessoa_mais'], row['qte_pessoa_menos'], row['acomodacao'], row['canc_free'], row['ativo']);
+            listaReservas.push(reserva);
+        }
+        return listaReservas;
+    }
 }

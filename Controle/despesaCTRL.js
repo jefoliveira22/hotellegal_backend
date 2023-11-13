@@ -162,4 +162,26 @@ export default class DespesaCTRL {
             });
         }
     }
+
+    consultarPeloPeriodo(requisicao, resposta) {
+        resposta.type('application/json');
+        const data_comp = requisicao.params['data_comp'];
+        if (requisicao.method === "GET") {
+            const despesa = new Despesa();
+            despesa.consultarID(data_comp).then((despesas) => {
+                resposta.status(200).json(despesas);
+            }).catch((erro) => {
+                resposta.status(500).json({
+                    status:false,
+                    mensagem: erro.message
+                })
+            });
+        }
+        else {
+            resposta.status(400).json({
+                status:false,
+                mensagem:'Método não permitido ou despesa no formato JSON não fornecido.'
+            });
+        }
+    }
 }

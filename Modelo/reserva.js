@@ -148,4 +148,22 @@ export default class Reserva {
         const reservas = await reservaBD.consultarID(id);
         return reservas;
     }
+
+    async consultarPeriodo(checkin) {
+        const reservaBD = new ReservaBD();
+        const reservas = await reservaBD.consultarPeriodo(checkin);
+        return reservas;
+    }
+
+    async consultarHospede(cpf_hosp) {
+        const reservaBD = new ReservaBD();
+        const reservas = await reservaBD.consultarHospede(cpf_hosp);
+        return reservas;
+    }
+
+    async consultarStatus(ativo) {
+        const reservaBD = new ReservaBD();
+        const reservas = await reservaBD.consultarStatus(ativo);
+        return reservas;
+    }
 }
