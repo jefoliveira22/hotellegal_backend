@@ -149,9 +149,9 @@ export default class Reserva {
         return reservas;
     }
 
-    async consultarPeriodo(checkin) {
+    async consultarPeriodo(periodo) {
         const reservaBD = new ReservaBD();
-        const reservas = await reservaBD.consultarPeriodo(checkin);
+        const reservas = await reservaBD.consultarPeriodo(periodo);
         return reservas;
     }
 

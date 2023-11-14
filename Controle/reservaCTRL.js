@@ -221,11 +221,10 @@ export default class ReservaCTRL {
 
     consultarPeloPeriodo(requisicao, resposta) {
         resposta.type('application/json');
-        const checkin = requisicao.params['checkin'];
-        console.log('Checkin recebido:', checkin);
-        if (requisicao.method === "GET") {
+        if (requisicao.method === "POST" && requisicao.is('application/json')) {
+            const periodo = requisicao.body;
             const reserva = new Reserva();
-            reserva.consultarPeriodo(checkin).then((reservas) => {
+            reserva.consultarPeriodo(periodo).then((reservas) => {
                 resposta.status(200).json(reservas);
             }).catch((erro) => {
                 resposta.status(500).json({
@@ -247,7 +246,7 @@ export default class ReservaCTRL {
         const cpf_hosp = requisicao.params['cpf_hosp'];
         if (requisicao.method === "GET") {
             const reserva = new Reserva();
-            reserva.consultarPeloHospede(cpf_hosp).then((reservas) => {
+            reserva.consultarHospede(cpf_hosp).then((reservas) => {
                 resposta.status(200).json(reservas);
             }).catch((erro) => {
                 resposta.status(500).json({
@@ -269,7 +268,7 @@ export default class ReservaCTRL {
         const ativo = requisicao.params['ativo'];
         if (requisicao.method === "GET") {
             const reserva = new Reserva();
-            reserva.consultarPeloStatus(ativo).then((reservas) => {
+            reserva.consultarStatus(ativo).then((reservas) => {
                 resposta.status(200).json(reservas);
             }).catch((erro) => {
                 resposta.status(500).json({
