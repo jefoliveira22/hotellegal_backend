@@ -105,9 +105,9 @@ export default class Hospedagem {
         return hospedagens;
     }
 
-    async consultarPeriodo(data_ini) {
+    async consultarPeriodo(periodo) {
         const hospedagemBD = new HospedagemBD();
-        const hospedagens = await hospedagemBD.consultarPeriodo(data_ini);
+        const hospedagens = await hospedagemBD.consultarPeriodo(periodo);
         return hospedagens;
     }
 

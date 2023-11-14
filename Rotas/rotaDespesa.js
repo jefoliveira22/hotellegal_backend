@@ -8,6 +8,6 @@ rotaDespesa.post('/', despesaCtrl.gravar)
 .delete('/', despesaCtrl.excluir)
 .get('/', despesaCtrl.consultar)
 .get('/:id_despesa', despesaCtrl.consultarPeloID)
-.get('/:data_comp', despesaCtrl.consultarPeloPeriodo);
+.post('/periodo/', despesaCtrl.consultarPeloPeriodo);
 
 export default rotaDespesa;

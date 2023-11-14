@@ -165,10 +165,10 @@ export default class DespesaCTRL {
 
     consultarPeloPeriodo(requisicao, resposta) {
         resposta.type('application/json');
-        const data_comp = requisicao.params['data_comp'];
-        if (requisicao.method === "GET") {
+        if (requisicao.method === "POST" && requisicao.is('application/json')) {
+            const periodo = requisicao.body;
             const despesa = new Despesa();
-            despesa.consultarID(data_comp).then((despesas) => {
+            despesa.consultarPeriodo(periodo).then((despesas) => {
                 resposta.status(200).json(despesas);
             }).catch((erro) => {
                 resposta.status(500).json({

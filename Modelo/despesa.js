@@ -139,9 +139,9 @@ export default class Despesa {
         return despesas;
     }
 
-    async consultarID(data_comp) {
+    async consultarPeriodo(periodo) {
         const despesaBD = new DespesaBD();
-        const despesas = await despesaBD.consultarPeriodo(data_comp);
+        const despesas = await despesaBD.consultarPeriodo(periodo);
         return despesas;
     }
 }

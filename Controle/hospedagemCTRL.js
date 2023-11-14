@@ -159,10 +159,10 @@ export default class HospedagemCTRL {
 
     consultarPeloPeriodo(requisicao, resposta) {
         resposta.type('application/json');
-        const data_ini = requisicao.params['data_ini'];
-        if (requisicao.method === "GET") {
+        if (requisicao.method === "POST" && requisicao.is('application/json')) {
+            const periodo = requisicao.body;
             const hospedagem = new Hospedagem();
-            hospedagem.consultarPeriodo(data_ini).then((hospedagens) => {
+            hospedagem.consultarPeriodo(periodo).then((hospedagens) => {
                 resposta.status(200).json(hospedagens);
             }).catch((erro) => {
                 resposta.status(500).json({
@@ -183,7 +183,7 @@ export default class HospedagemCTRL {
         const h_ativo = requisicao.params['h_ativo'];
         if (requisicao.method === "GET") {
             const hospedagem = new Hospedagem();
-            hospedagem.consultarPeloStatus(h_ativo).then((hospedagens) => {
+            hospedagem.consultarStatus(h_ativo).then((hospedagens) => {
                 resposta.status(200).json(hospedagens);
             }).catch((erro) => {
                 resposta.status(500).json({

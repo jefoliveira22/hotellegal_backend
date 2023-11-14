@@ -61,10 +61,10 @@ export default class HospedagemBD {
         return listaHospedagem;
     }
 
-    async consultarPeriodo(data_ini) {
+    async consultarPeriodo(periodo) {
         const conexao = await conectar();
-        const sql = "SELECT * FROM hospedagem WHERE data_ini BETWEEN '?' AND '?'";
-        const valores = [data_ini, data_ini];
+        const sql = "SELECT * FROM hospedagem WHERE data_ini BETWEEN ? AND ?";
+        const valores = [periodo.inicio, periodo.fim];
         const [rows] = await conexao.query(sql, valores);
         const listaHospedagem = [];
         for (const row of rows) {
@@ -76,7 +76,7 @@ export default class HospedagemBD {
 
     async consultarStatus(h_ativo) {
         const conexao = await conectar();
-        const sql = "SELECT * FROM hospedagem WHERE h_ativo='?'";
+        const sql = "SELECT * FROM hospedagem WHERE h_ativo = ? ";
         const valores = [h_ativo];
         const [rows] = await conexao.query(sql, valores);
         const listaHospedagem = [];
