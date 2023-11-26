@@ -63,12 +63,14 @@ export default class DespesaBD {
 
     async consultarPeriodo(periodo) {
         const conexao = await conectar();
-        const sql = "SELECT * FROM despesas WHERE data_comp BETWEEN ? AND ?";
+        const sql = "SELECT * FROM despesas INNER JOIN fornecedores ON despesas.fornecedor = fornecedores.fornecedor_id INNER JOIN usuarios ON fornecedores.usuario_id = usuarios.usuario_id WHERE data_comp BETWEEN ? AND ?";
         const valores = [periodo.inicio, periodo.fim];
         const [rows] = await conexao.query(sql, valores);
         const listaDespesa = [];
         for (const row of rows) {
-            const despesa = new Despesa(row['id_despesa'], row['cod_tipo_despesa'], row['nome_desp'], row['nfe'], row['data_comp'], row['valortotal'], row['obs'], row['pago']);
+            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['endereco'], row['telefone'], row['cidade'], row['estado'], row['cep'], row['tipo_usuario']);
+            const fornecedor = new Fornecedor(row['fornecedor_id'], row['razao_social'], row['cnpj'], row['ie'], row['categoria'], usuario);
+            const despesa = new Despesa(row['id_despesa'], row['cod_tipo_despesa'], row['nome_desp'], row['nfe'], fornecedor, row['data_comp'], row['valortotal'], row['obs'], row['pago']);
             listaDespesa.push(despesa);
         }
         return listaDespesa;

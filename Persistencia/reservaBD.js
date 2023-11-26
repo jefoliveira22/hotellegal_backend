@@ -43,7 +43,7 @@ export default class ReservaBD {
 
     async consultar() {
         const conexao = await conectar();
-        const sql = "SELECT * FROM reservas INNER JOIN clientes ON reservas.cpf_hosp = clientes.cpf INNER JOIN usuarios ON clientes.usuario_id = usuarios.usuario_id";
+        const sql = "SELECT * FROM reservas INNER JOIN clientes ON reservas.cpf_hosp = clientes.cpf INNER JOIN usuarios ON clientes.usuario_id = usuarios.usuario_id WHERE ativo = 'Sim'";
         const [rows] = await conexao.query(sql);
         const listaReservas = [];
         for (const row of rows) {
@@ -84,12 +84,14 @@ export default class ReservaBD {
 
     async consultarPeriodo(dados) {
         const conexao = await conectar();
-        const sql = "SELECT * FROM reservas WHERE checkin BETWEEN ? AND ?";
+        const sql = "SELECT * FROM reservas INNER JOIN clientes ON reservas.cpf_hosp = clientes.cpf INNER JOIN usuarios ON clientes.usuario_id = usuarios.usuario_id WHERE checkin BETWEEN ? AND ?";
         const valores = [dados.inicio, dados.fim];
         const [rows] = await conexao.query(sql, valores);
         const listaReservas = [];
         for (const row of rows) {
-            const reserva = new Reserva(row['id_reserva'], row['checkin'], row['checkout'], row['qte_pessoa_mais'], row['qte_pessoa_menos'], row['acomodacao'], row['canc_free'], row['ativo']);
+            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['endereco'], row['telefone'], row['cidade'], row['estado'], row['cep'], row['tipo_usuario']);
+            const hospede = new Cliente(row['cliente_id'], row['cpf'], row['datanasc'], row['nacionalidade'], row['profissao'], row['sexo'], row['senha'], usuario);
+            const reserva = new Reserva(row['id_reserva'], row['checkin'], row['checkout'], row['qte_pessoa_mais'], row['qte_pessoa_menos'], row['acomodacao'], row['canc_free'], row['ativo'], hospede);
             listaReservas.push(reserva);
         }
         return listaReservas;
