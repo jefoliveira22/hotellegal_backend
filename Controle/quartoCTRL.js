@@ -133,6 +133,27 @@ export default class QuartoCTRL {
         }
     }
 
+    consultarQuartoVazio(requisicao, resposta) {
+        resposta.type('application/json');
+        if (requisicao.method === "GET") {
+            const quarto = new Quarto();
+            quarto.consultarVazio('').then((quartos) => {
+                resposta.status(200).json(quartos);
+            }).catch((erro) => {
+                resposta.status(500).json({
+                    status:false,
+                    mensagem: erro.message
+                })
+            });
+        }
+        else {
+            resposta.status(400).json({
+                status:false,
+                mensagem:'Método não permitido ou quarto no formato JSON não fornecido.'
+            });
+        }
+    }
+
     consultarPeloNome(requisicao, resposta) {
         resposta.type('application/json');
         const nomequarto = requisicao.params['nomequarto'];

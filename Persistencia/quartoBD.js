@@ -21,6 +21,15 @@ export default class QuartoBD {
         }
     }
 
+    async alterarOcupacao(quarto) {
+        if (quarto instanceof Quarto) {
+            const conexao = await conectar();
+            const sql = "UPDATE quarto SET ocupado=? WHERE nomequarto=?";
+            const valores = [quarto.ocupado, quarto.nomequarto];
+            await conexao.query(sql, valores);
+        }
+    }
+
     async excluir(quarto) {
         if (quarto instanceof Quarto) {
             const conexao = await conectar();
@@ -33,6 +42,18 @@ export default class QuartoBD {
     async consultar() {
         const conexao = await conectar();
         const sql = "SELECT * FROM quarto";
+        const [rows] = await conexao.query(sql);
+        const listaquartos = [];
+        for (const row of rows) {
+            const quarto = new Quarto(row['idquarto'], row['numquarto'], row['nomequarto'], row['descricao'], row['ocupado']);
+            listaquartos.push(quarto);
+        }
+        return listaquartos;
+    }
+
+    async consultarVazio() {
+        const conexao = await conectar();
+        const sql = "SELECT * FROM quarto WHERE ocupado='N'";
         const [rows] = await conexao.query(sql);
         const listaquartos = [];
         for (const row of rows) {

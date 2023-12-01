@@ -77,6 +77,11 @@ export default class Quarto {
         await quartoBD.alterar(this);
     }
 
+    async atualizarOcupacao() {
+        const quartoBD = new QuartoBD();
+        await quartoBD.alterarOcupacao(this);
+    }
+
     async removerBanco() {
         const quartoBD = new QuartoBD();
         await quartoBD.excluir(this);
@@ -85,6 +90,12 @@ export default class Quarto {
     async consultar() {
         const quartoBD = new QuartoBD();
         const quartos = await quartoBD.consultar();
+        return quartos;
+    }
+
+    async consultarVazio() {
+        const quartoBD = new QuartoBD();
+        const quartos = await quartoBD.consultarVazio();
         return quartos;
     }
 

@@ -1,4 +1,5 @@
 import Reserva from '../Modelo/reserva.js';
+import Quarto from '../Modelo/quarto.js';
 
 
 export default class ReservaCTRL {
@@ -18,28 +19,28 @@ export default class ReservaCTRL {
                 const reserva = new Reserva(0, checkin, checkout, qte_pessoa_mais, qte_pessoa_menos, acomodacao, canc_free, ativo, hospede);
                 reserva.gravar().then(() => {
                     resposta.status(200).json({
-                        status:true,
-                        codigo:reserva.id_reserva,
-                        mensagem:'Reserva gravada com sucesso!'
+                        status: true,
+                        codigo: reserva.id_reserva,
+                        mensagem: 'Reserva gravada com sucesso!'
                     });
                 }).catch((erro) => {
                     resposta.status(500).json({
-                        status:false,
+                        status: false,
                         mensagem: erro.message
                     })
                 });
             }
             else {
                 resposta.status(400).json({
-                    status:false,
-                    mensagem:'Informe adequadamente todos os dados de uma reserva conforme documentação da API.'
+                    status: false,
+                    mensagem: 'Informe adequadamente todos os dados de uma reserva conforme documentação da API.'
                 })
             }
         }
         else {
             resposta.status(400).json({
-                status:false,
-                mensagem:'Método não permitido ou reserva no formato JSON não fornecido.'
+                status: false,
+                mensagem: 'Método não permitido ou reserva no formato JSON não fornecido.'
             });
         }
     }
@@ -61,27 +62,27 @@ export default class ReservaCTRL {
                 const reserva = new Reserva(id_reserva, cpf_hosp, checkin, checkout, qte_pessoa_mais, qte_pessoa_menos, acomodacao, canc_free, ativo);
                 reserva.atualizar().then(() => {
                     resposta.status(200).json({
-                        status:true,
-                        mensagem:'Reserva atualizada com sucesso!'
+                        status: true,
+                        mensagem: 'Reserva atualizada com sucesso!'
                     });
                 }).catch((erro) => {
                     resposta.status(500).json({
-                        status:false,
+                        status: false,
                         mensagem: erro.message
                     })
                 });
             }
             else {
                 resposta.status(400).json({
-                    status:false,
-                    mensagem:'Informe adequadamente todos os dados de uma reserva conforme documentação da API.'
+                    status: false,
+                    mensagem: 'Informe adequadamente todos os dados de uma reserva conforme documentação da API.'
                 })
             }
         }
         else {
             resposta.status(400).json({
-                status:false,
-                mensagem:'Método não permitido ou reserva no formato JSON não fornecido.'
+                status: false,
+                mensagem: 'Método não permitido ou reserva no formato JSON não fornecido.'
             });
         }
     }
@@ -92,31 +93,52 @@ export default class ReservaCTRL {
             const dados = requisicao.body;
             const id_reserva = dados.id_reserva;
             const ativo = dados.ativo;
+            const acomodacao = dados.acomodacao;
+            const ocupado = "S";
             if (id_reserva, ativo) {
                 const reserva = new Reserva(id_reserva, ativo);
                 reserva.baixar().then(() => {
+                    const quarto = new Quarto(0, 0, acomodacao, 0, ocupado);
+                    quarto.atualizarOcupacao().then(() => {
+                        resposta.status(200).json();
+                    }).catch((erro) => {
+                        resposta.status(500).json({
+                            status: false,
+                            mensagem: erro.message
+                        })
+                    })
                     resposta.status(200).json({
-                        status:true,
-                        mensagem:'Check-in concluído'
+                        status: true,
+                        mensagem: 'Check-in concluído'
                     });
                 }).catch((erro) => {
                     resposta.status(500).json({
-                        status:false,
+                        status: false,
                         mensagem: erro.message
                     })
                 });
             }
             else {
                 resposta.status(400).json({
-                    status:false,
-                    mensagem:'Informe adequadamente todos os dados de uma reserva conforme documentação da API.'
+                    status: false,
+                    mensagem: 'Informe adequadamente todos os dados de uma reserva conforme documentação da API.'
+                })
+            }
+            if (acomodacao) {
+
+
+            }
+            else {
+                resposta.status(400).json({
+                    status: false,
+                    mensagem: 'Informe adequadamente todos os dados de uma reserva conforme documentação da API.'
                 })
             }
         }
         else {
             resposta.status(400).json({
-                status:false,
-                mensagem:'Método não permitido ou reserva no formato JSON não fornecido.'
+                status: false,
+                mensagem: 'Método não permitido ou reserva no formato JSON não fornecido.'
             });
         }
     }
@@ -130,27 +152,27 @@ export default class ReservaCTRL {
                 const reserva = new Reserva(id_reserva);
                 reserva.removerBanco().then(() => {
                     resposta.status(200).json({
-                        status:true,
-                        mensagem:'Reserva removida com sucesso!'
+                        status: true,
+                        mensagem: 'Reserva removida com sucesso!'
                     });
                 }).catch((erro) => {
                     resposta.status(500).json({
-                        status:false,
+                        status: false,
                         mensagem: erro.message
                     })
                 });
             }
             else {
                 resposta.status(400).json({
-                    status:false,
-                    mensagem:'Informe id da reserva conforme documentação da API.'
+                    status: false,
+                    mensagem: 'Informe id da reserva conforme documentação da API.'
                 })
             }
         }
         else {
             resposta.status(400).json({
-                status:false,
-                mensagem:'Método não permitido ou reserva no formato JSON não fornecido.'
+                status: false,
+                mensagem: 'Método não permitido ou reserva no formato JSON não fornecido.'
             });
         }
     }
@@ -163,15 +185,15 @@ export default class ReservaCTRL {
                 resposta.status(200).json(reservas);
             }).catch((erro) => {
                 resposta.status(500).json({
-                    status:false,
+                    status: false,
                     mensagem: erro.message
                 })
             });
         }
         else {
             resposta.status(400).json({
-                status:false,
-                mensagem:'Método não permitido ou reserva no formato JSON não fornecido.'
+                status: false,
+                mensagem: 'Método não permitido ou reserva no formato JSON não fornecido.'
             });
         }
     }
@@ -184,15 +206,15 @@ export default class ReservaCTRL {
                 resposta.status(200).json(reservas);
             }).catch((erro) => {
                 resposta.status(500).json({
-                    status:false,
+                    status: false,
                     mensagem: erro.message
                 })
             });
         }
         else {
             resposta.status(400).json({
-                status:false,
-                mensagem:'Método não permitido ou reserva no formato JSON não fornecido.'
+                status: false,
+                mensagem: 'Método não permitido ou reserva no formato JSON não fornecido.'
             });
         }
     }
@@ -206,15 +228,15 @@ export default class ReservaCTRL {
                 resposta.status(200).json(reservas);
             }).catch((erro) => {
                 resposta.status(500).json({
-                    status:false,
+                    status: false,
                     mensagem: erro.message
                 })
             });
         }
         else {
             resposta.status(400).json({
-                status:false,
-                mensagem:'Método não permitido ou reserva no formato JSON não fornecido.'
+                status: false,
+                mensagem: 'Método não permitido ou reserva no formato JSON não fornecido.'
             });
         }
     }
@@ -239,7 +261,7 @@ export default class ReservaCTRL {
             });
         }
     }
-    
+
 
     consultarPeloHospede(requisicao, resposta) {
         resposta.type('application/json');
@@ -250,15 +272,15 @@ export default class ReservaCTRL {
                 resposta.status(200).json(reservas);
             }).catch((erro) => {
                 resposta.status(500).json({
-                    status:false,
+                    status: false,
                     mensagem: erro.message
                 })
             });
         }
         else {
             resposta.status(400).json({
-                status:false,
-                mensagem:'Método não permitido ou reserva no formato JSON não fornecido.'
+                status: false,
+                mensagem: 'Método não permitido ou reserva no formato JSON não fornecido.'
             });
         }
     }
@@ -272,15 +294,15 @@ export default class ReservaCTRL {
                 resposta.status(200).json(reservas);
             }).catch((erro) => {
                 resposta.status(500).json({
-                    status:false,
+                    status: false,
                     mensagem: erro.message
                 })
             });
         }
         else {
             resposta.status(400).json({
-                status:false,
-                mensagem:'Método não permitido ou reserva no formato JSON não fornecido.'
+                status: false,
+                mensagem: 'Método não permitido ou reserva no formato JSON não fornecido.'
             });
         }
     }

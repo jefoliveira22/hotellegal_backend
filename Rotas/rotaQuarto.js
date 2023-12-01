@@ -7,6 +7,7 @@ rotaQuarto.post('/', quartoCtrl.gravar)
 .put('/', quartoCtrl.atualizar)
 .delete('/', quartoCtrl.excluir)
 .get('/', quartoCtrl.consultar)
+.get('/vazio/', quartoCtrl.consultarQuartoVazio)
 .get('/:nomequarto', quartoCtrl.consultarPeloNome);
 
 export default rotaQuarto;

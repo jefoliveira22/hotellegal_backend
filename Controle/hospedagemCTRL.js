@@ -1,4 +1,5 @@
 import Hospedagem from '../Modelo/hospedagem.js';
+import Quarto from '../Modelo/quarto.js';
 
 
 export default class HospedagemCTRL {
@@ -51,9 +52,20 @@ export default class HospedagemCTRL {
             const valor_tot = dados.valor_tot;
             const h_ativo = dados.h_ativo;
             const reserva = dados.reserva;
+            const acomodacao = dados.reserva.acomodacao;
+            const ocupado = "N";
             if (id_hospedagem, data_ini, data_fim, valor_tot, h_ativo, reserva) {
                 const hospedagem = new Hospedagem(id_hospedagem, data_ini, data_fim, valor_tot, h_ativo, reserva);
                 hospedagem.atualizar().then(() => {
+                    const quarto = new Quarto(0, 0, acomodacao, 0, ocupado);
+                    quarto.atualizarOcupacao().then(() => {
+                        resposta.status(200).json();
+                    }).catch((erro) => {
+                        resposta.status(500).json({
+                            status: false,
+                            mensagem: erro.message
+                        })
+                    })
                     resposta.status(200).json({
                         status:true,
                         mensagem:'Hospedagem atualizada com sucesso!'

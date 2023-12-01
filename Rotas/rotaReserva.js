@@ -9,7 +9,7 @@ rotaReserva.post('/', reservaCtrl.gravar)
 .delete('/', reservaCtrl.excluir)
 .get('/', reservaCtrl.consultar)
 .get('/:id_reserva', reservaCtrl.consultarPeloID)
-.get('/ultimo/', reservaCtrl.consultarPeloUltimoID)
+.get('/req2/:ultimo', reservaCtrl.consultarPeloUltimoID)
 .post('/periodo', reservaCtrl.consultarPeloPeriodo)
 .get('/cpf/:cpf_hosp', reservaCtrl.consultarPeloHospede)
 .get('/status/:ativo', reservaCtrl.consultarPeloStatus);
