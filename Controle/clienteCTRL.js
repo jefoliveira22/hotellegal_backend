@@ -135,4 +135,26 @@ export default class FuncionarioCTRL {
             });
         }
     }
+
+    consultarPeloEmail(requisicao, resposta) {
+        resposta.type('application/json');
+        const email = requisicao.params['email'];
+        if (requisicao.method === "GET") {
+            const cliente = new Cliente();
+            cliente.consultarEmail(email).then((emails) => {
+                resposta.status(200).json(emails);
+            }).catch((erro) => {
+                resposta.status(500).json({
+                    status: false,
+                    mensagem: erro.message
+                })
+            });
+        }
+        else {
+            resposta.status(400).json({
+                status: false,
+                mensagem: 'Método não permitido ou cliente no formato JSON não fornecido.'
+            });
+        }
+    }
 }

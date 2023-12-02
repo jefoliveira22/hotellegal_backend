@@ -7,6 +7,7 @@ rotaCliente
 .post('/', clienteCtrl.gravar)
 .put('/', clienteCtrl.atualizar)
 .get('/', clienteCtrl.consultar)
-.get('/:nome', clienteCtrl.consultarPeloNome);
+.get('/:nome', clienteCtrl.consultarPeloNome)
+.get('/login/:email', clienteCtrl.consultarPeloEmail);
 
 export default rotaCliente;

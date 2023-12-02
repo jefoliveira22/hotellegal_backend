@@ -122,4 +122,10 @@ export default class Cliente {
         const clientes = await clienteBD.consultarNome(nome);
         return clientes;
     }
+
+    async consultarEmail(email) {
+        const clienteBD = new ClienteBD();
+        const clientes = await clienteBD.consultarEmail(email);
+        return clientes;
+    }
 }

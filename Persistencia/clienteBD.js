@@ -49,4 +49,18 @@ export default class ClienteBD {
         }
         return listaClientes;
     }
+
+    async consultarEmail(email) {
+        const conexao = await conectar();
+        const sql = "SELECT * FROM clientes INNER JOIN usuarios ON clientes.usuario_id = usuarios.usuario_id WHERE usuarios.email = ?";
+        const valores = [email];
+        const [rows] = await conexao.query(sql, valores);
+        const listaClientes = [];
+        for (const row of rows) {           
+            const usuario = new Usuario(row['usuario_id'], row['nome'], row['email'], row['endereco'], row['telefone'], row['cidade'], row['estado'], row['cep'], row['tipo_usuario']);
+            const cliente = new Cliente(row['cliente_id'], row['cpf'], row['datanasc'], row['nacionalidade'], row['profissao'], row['sexo'], row['senha'], usuario);
+            listaClientes.push(cliente);
+        }
+        return listaClientes;
+    }
 }
