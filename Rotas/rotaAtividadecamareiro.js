@@ -7,6 +7,6 @@ rotaAtividadecamareiro.post('/', atividadecamareiroCtrl.gravar)
 .put('/', atividadecamareiroCtrl.atualizar)
 .delete('/', atividadecamareiroCtrl.excluir)
 .get('/', atividadecamareiroCtrl.consultar)
-.get('/:cpf_cam', atividadecamareiroCtrl.consultarPeloCPF);
+.get('/:nis_cam', atividadecamareiroCtrl.consultarPeloCPF);
 
 export default rotaAtividadecamareiro;
